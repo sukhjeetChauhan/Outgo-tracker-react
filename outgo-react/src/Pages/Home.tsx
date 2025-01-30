@@ -1,5 +1,7 @@
 import { useMsal } from '@azure/msal-react'
 import LoginButton from '../components/LoginButton'
+import PasswordReset from '../components/PasswordReset'
+import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
   const { instance, accounts } = useMsal()
@@ -8,9 +10,8 @@ export default function Home() {
     instance.logoutPopup()
   }
 
-  console.log(accounts)
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-screen gap-4">
       <h1 className="text-4xl text-center text-blue-500 font-bold mt-10">
         Welcome to Outgo
       </h1>
@@ -22,6 +23,8 @@ export default function Home() {
       ) : (
         <LoginButton />
       )}
-    </>
+      <PasswordReset />
+      <button onClick={() => fetchData(instance, accounts)}>Click</button>
+    </div>
   )
 }
