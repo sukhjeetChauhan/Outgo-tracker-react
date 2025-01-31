@@ -1,14 +1,14 @@
 import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
 
-const apiUrl = 'http://localhost:5298/api'
+// const apiUrl = 'http://localhost:5298/api'
 
 type Instance = IPublicClientApplication
 type Account = AccountInfo
 
-const fetchData = async (
+const fetchBackendToken = async (
   instance: Instance,
   accounts: Account[]
-): Promise<void> => {
+): Promise<string> => {
   try {
     const response = await instance.acquireTokenSilent({
       scopes: [
@@ -18,21 +18,22 @@ const fetchData = async (
     })
 
     const token = response.accessToken
-    console.log('Token:', token)
 
-    const apiResponse = await fetch(`${apiUrl}/protected`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: 'include', // 🔹 Important for CORS
-    })
+    // const apiResponse = await fetch(`${apiUrl}/protected`, {
+    //   method: 'GET',
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   credentials: 'include', // 🔹 Important for CORS
+    // })
 
-    const data = await apiResponse.json()
-    console.log(data)
+    // const data = await apiResponse.json()
+    // console.log(data)
+    return token
   } catch (error) {
     console.error('Error fetching data:', error)
+    return `Error fetching data: ${error}`
   }
 }
 
-export default fetchData
+export default fetchBackendToken
