@@ -1,5 +1,5 @@
 import { useMsal } from '@azure/msal-react'
-import { passwordResetAuthority } from '../authentication/authConfig'
+import { passwordResetAuthority } from '../../authentication/authConfig'
 
 export default function LoginButton() {
   const { instance } = useMsal()

@@ -16,8 +16,8 @@ export default function Menubar({ retractMenu }: { retractMenu: boolean }) {
                 <span>{item.icon}</span>
               </div>
               <div
-                className={`px-4 ${
-                  retractMenu ? 'w-0' : 'w-44'
+                className={`${
+                  retractMenu ? 'w-0' : 'w-44 px-4'
                 } transition-all duration-500 ease-in-out overflow-hidden`}
               >
                 <p className="text-white font-semibold text-xl">{item.name}</p>

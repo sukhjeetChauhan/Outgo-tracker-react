@@ -1,12 +1,14 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch, useSelector } from 'react-redux'
-import LoginButton from '../components/LoginButton'
-import PasswordReset from '../components/PasswordReset'
+import LoginButton from '../components/userComponents/LoginButton'
+import PasswordReset from '../components/userComponents/PasswordReset'
 import { fetchUser } from '../Redux/Slices/userSlice'
 import { RootState, AppDispatch } from '../Redux/store'
 import { useEffect, useState } from 'react'
-import LogoutButton from '../components/LogoutButton'
+import LogoutButton from '../components/userComponents/LogoutButton'
 import Menubar from '../components/Menubar'
+import ProjectsList from '../components/partialComponents/ProjectsList'
+import UserLabelDashboard from '../components/userComponents/UserLabelDashboard'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
@@ -43,10 +45,16 @@ export default function Home() {
                 {retractMenu ? '>' : '<'}
               </button>
             </div>
+            <div className="border-t-2 border-gray-200 flex flex-col gap-4 items-center p-4 my-4 w-full">
+              <LogoutButton />
+            </div>
           </div>
         </div>
         <div className="min-h-screen flex-1 flex flex-col items-center p-4">
-          <div className="border-b-2 border-gray-200 w-full h-24"></div>
+          <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
+            <ProjectsList />
+            <UserLabelDashboard firstName={firstName} lastName={lastName} />
+          </div>
           <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2"></div>
           <div className="w-full flex-1 grid grid-cols-[1fr_1fr] gap-4">
             <div className="bg-white rounded"></div>
