@@ -22,6 +22,11 @@ export class ProjectRepository {
     return data
   }
 
+  static async getByName(name: string) {
+    const { data } = await axios.get(`${backendApiUrl}/Project/byName/${name}`)
+    return data
+  }
+
   static async create(project: Project) {
     const { data } = await axios.post(`${backendApiUrl}/Project`, project)
     return data

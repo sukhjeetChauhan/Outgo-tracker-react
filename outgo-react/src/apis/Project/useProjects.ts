@@ -16,6 +16,14 @@ export const useProject = (id: number) => {
   })
 }
 
+export const useProjectByName = (name: string) => {
+  return useQuery({
+    queryKey: ['project', name],
+    queryFn: () => ProjectRepository.getByName(name),
+    enabled: !!name, // Prevents execution if name is null or undefined
+  })
+}
+
 export const useCreateProject = () => {
   const queryClient = useQueryClient()
   return useMutation({
