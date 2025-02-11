@@ -2,13 +2,23 @@ import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
 
 // const apiUrl = 'http://localhost:5298/api'
 
+interface ReturnType {
+  token: string
+  tokenOptions: {
+    headers: {
+      Authorization: string
+    }
+    withCredentials: boolean
+  }
+}
+
 type Instance = IPublicClientApplication
 type Account = AccountInfo
 
 const fetchBackendToken = async (
   instance: Instance,
   accounts: Account[]
-): Promise<string> => {
+): Promise<ReturnType | string> => {
   try {
     const response = await instance.acquireTokenSilent({
       scopes: [
@@ -19,17 +29,14 @@ const fetchBackendToken = async (
 
     const token = response.accessToken
 
-    // const apiResponse = await fetch(`${apiUrl}/protected`, {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   credentials: 'include', // 🔹 Important for CORS
-    // })
+    const tokenOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true, // 🔹 Important for CORS
+    }
 
-    // const data = await apiResponse.json()
-    // console.log(data)
-    return token
+    return { token, tokenOptions }
   } catch (error) {
     console.error('Error fetching data:', error)
     return `Error fetching data: ${error}`
