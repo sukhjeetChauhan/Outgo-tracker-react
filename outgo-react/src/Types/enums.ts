@@ -29,3 +29,9 @@ export enum Role {
   Admin = 'Admin',
   User = 'User',
 }
+
+export enum Status {
+  Pending = 'Pending',
+  Confirmed = 'Confirmed',
+  Rejected = 'Rejected',
+}
