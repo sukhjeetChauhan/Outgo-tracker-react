@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Project, ProjectRepository } from './ProjectRepository'
+import { useMsal } from '@azure/msal-react'
 
 export const useProjects = () => {
   return useQuery({
@@ -25,9 +26,11 @@ export const useProjectByName = (name: string) => {
 }
 
 export const useCreateProject = () => {
+  const { instance, accounts } = useMsal() // Get MSAL instance
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ProjectRepository.create,
+    mutationFn: (project: Project) =>
+      ProjectRepository.create(project, instance, accounts),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
@@ -35,10 +38,11 @@ export const useCreateProject = () => {
 }
 
 export const useUpdateProject = () => {
+  const { instance, accounts } = useMsal() // Get MSAL instance & accounts
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ id, project }: { id: number; project: Project }) =>
-      ProjectRepository.update(id, project),
+      ProjectRepository.update(id, project, instance, accounts),
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
       queryClient.invalidateQueries({ queryKey: ['project', id] })
@@ -47,9 +51,11 @@ export const useUpdateProject = () => {
 }
 
 export const useDeleteProject = () => {
+  const { instance, accounts } = useMsal() // Get MSAL instance & accounts
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ProjectRepository.delete,
+    mutationFn: (id: number) =>
+      ProjectRepository.delete(id, instance, accounts),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },

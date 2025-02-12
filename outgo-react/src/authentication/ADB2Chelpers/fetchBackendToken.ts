@@ -2,7 +2,7 @@ import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
 
 // const apiUrl = 'http://localhost:5298/api'
 
-interface ReturnType {
+export interface ReturnType {
   token: string
   tokenOptions: {
     headers: {

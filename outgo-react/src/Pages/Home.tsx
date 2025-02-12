@@ -55,7 +55,16 @@ export default function Home() {
             <ProjectsList />
             <UserLabelDashboard firstName={firstName} lastName={lastName} />
           </div>
-          <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2"></div>
+          <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">
+            <div className="flex justify-around w-full items-center px-4">
+              <button className="bg-red-400 px-4 py-2 rounded text-white text-lg">
+                Add Expense
+              </button>
+              <button className="bg-yellow-400 px-4 py-2 rounded text-white text-lg">
+                Add Income
+              </button>
+            </div>
+          </div>
           <div className="w-full flex-1 grid grid-cols-[1fr_1fr] gap-4">
             <div className="bg-white rounded"></div>
             <div className="bg-white rounded"></div>

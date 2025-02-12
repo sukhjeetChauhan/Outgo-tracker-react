@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { Timeframe } from '../../Types/enums'
+import fetchBackendToken from '../../authentication/ADB2Chelpers/fetchBackendToken'
+import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
 
 const backendApiUrl = 'http://localhost:5298/api'
 
@@ -27,16 +29,35 @@ export class ProjectRepository {
     return data
   }
 
-  static async create(project: Project) {
-    const { data } = await axios.post(`${backendApiUrl}/Project`, project)
+  static async create(
+    project: Project,
+    instance: IPublicClientApplication,
+    accounts: AccountInfo[]
+  ) {
+    const tokendata = await fetchBackendToken(instance, accounts)
+    if (typeof tokendata === 'string') {
+      throw new Error('Invalid token data')
+    }
+    const { data } = await axios.post(
+      `${backendApiUrl}/Project`,
+      project,
+      tokendata.tokenOptions
+    )
     return data
   }
 
-  static async update(id: number, project: Project) {
+  static async update(id: number, project: Project, instance: IPublicClientApplication,
+    accounts: AccountInfo[]) {
+
+    const tokendata = await fetchBackendToken(instance, accounts)
     try {
+      if (typeof tokendata === 'string') {
+        throw new Error('Invalid token data')
+      }
       const { data } = await axios.put(
         `${backendApiUrl}/Project/${id}`,
-        project
+        project,
+        tokendata.tokenOptions
       )
       return data
     } catch (error) {
@@ -45,9 +66,13 @@ export class ProjectRepository {
     }
   }
 
-  static async delete(id: number) {
+  static async delete(id: number, instance: IPublicClientApplication, accounts: AccountInfo[]) {
+    const tokendata = await fetchBackendToken(instance, accounts)
     try {
-      const { data } = await axios.delete(`${backendApiUrl}/Project/${id}`)
+      if (typeof tokendata === 'string') {
+        throw new Error('Invalid token data')
+      }
+      const { data } = await axios.delete(`${backendApiUrl}/Project/${id}`, tokendata.tokenOptions)
       return data
     } catch (error) {
       console.error('Error deleting project:', error)
