@@ -1,21 +1,21 @@
-interface IncomeDashboardButtonProps {
+interface ProjectDashboardButtonProps {
   showForm: (value: boolean) => void
   setShowModal: (value: boolean) => void
 }
 
-export default function IncomeDashboardButton({
+export default function ProjectDashboardButton({
   showForm,
   setShowModal,
-}: IncomeDashboardButtonProps) {
+}: ProjectDashboardButtonProps) {
   return (
     <button
-      className="bg-yellow-400 px-4 py-2 rounded text-white text-lg cursor-pointer"
+      className="rounded mt-4 px-4 py-2 bg-gray-500 text-white text-lg font-semibold"
       onClick={() => {
         showForm(true)
         setShowModal(true)
       }}
     >
-      Add Income
+      Create a Project
     </button>
   )
 }

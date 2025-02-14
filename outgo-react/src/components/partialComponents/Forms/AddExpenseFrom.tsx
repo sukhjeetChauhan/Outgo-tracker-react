@@ -11,24 +11,24 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import dayjs from 'dayjs'
-import { Timeframe, TransactionType } from '../../../Types/enums'
+import { Timeframe, TransactionType, Category } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
 
-interface Income {
+interface AddExpenseFormProps {
+  setShowModal: (value: boolean) => void
+  setExpenseForm: (value: boolean) => void
+}
+
+interface Expense {
   name: string
   description?: string
   amount: number
-  incomeType: TransactionType
+  expenseType: TransactionType
   timeframe?: Timeframe
   date: string // ISO String
+  category: Category
 }
 
-interface AddIncomeFormProps {
-  setShowModal: (value: boolean) => void
-  setIncomeForm: (value: boolean) => void
-}
-
-// Validation Schema
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
   description: yup.string(),
@@ -36,42 +36,53 @@ const schema = yup.object().shape({
     .number()
     .positive('Amount must be positive')
     .required('Amount is required'),
-  incomeType: yup
+  expenseType: yup
     .mixed<TransactionType>()
     .oneOf([TransactionType.OneOff, TransactionType.Recurring])
-    .required('Income type is required'),
+    .required('Expense type is required'),
   timeframe: yup
     .mixed<Timeframe>()
-    .oneOf([
-      Timeframe.Weekly,
-      Timeframe.Monthly,
-      Timeframe.Yearly,
-      Timeframe.Quarterly,
-      Timeframe.HalfYearly,
-    ])
+    .oneOf(
+      [
+        Timeframe.Weekly,
+        Timeframe.Monthly,
+        Timeframe.Yearly,
+        Timeframe.Quarterly,
+        Timeframe.HalfYearly,
+      ],
+      'Invalid timeframe'
+    )
     .optional(),
   date: yup.string().required('Date is required'),
+  category: yup
+    .mixed<Category>()
+    .oneOf(Object.values(Category))
+    .required('Category is required'),
 })
 
-const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
+const AddExpenseForm = ({
+  setShowModal,
+  setExpenseForm,
+}: AddExpenseFormProps) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
     reset,
-  } = useForm<Income>({
+  } = useForm<Expense>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: '',
       description: '',
       amount: 0,
-      incomeType: undefined,
+      expenseType: undefined,
       timeframe: undefined,
-      date: dayjs().toISOString(), // Default to today
+      date: dayjs().toISOString(),
+      category: undefined,
     },
   })
 
-  const onSubmit = async (data: Income) => {
+  const onSubmit = async (data: Expense) => {
     const postData = {
       ...data,
       userId: '123', // Dummy user ID (replace with actual logic)
@@ -79,28 +90,26 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
     }
 
     try {
-      const response = await fetch('/api/income', {
+      const response = await fetch('/api/expense', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData),
       })
-      ///need to modify this with actual api
-
       if (response.ok) {
-        message.success('Income added successfully!')
+        message.success('Expense added successfully!')
         reset()
       } else {
         throw new Error('Failed to submit')
       }
     } catch (error) {
-      message.error('Error submitting income')
+      message.error('Error submitting expense')
       console.error(error)
     }
   }
 
   return (
     <div className="rounded-lg bg-white px-4 py-8 shadow-md w-1/3 relative">
-      <h2 className="text-teal-500 text-xl font-bold mb-6">Income Details</h2>
+      <h2 className="text-teal-500 text-xl font-bold mb-6">Expense Details</h2>
       <Form layout="horizontal" onFinish={handleSubmit(onSubmit)}>
         <Form.Item
           label="Name"
@@ -141,15 +150,15 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         </Form.Item>
 
         <Form.Item
-          label="Income Type"
-          validateStatus={errors.incomeType ? 'error' : ''}
-          help={errors.incomeType?.message}
+          label="Expense Type"
+          validateStatus={errors.expenseType ? 'error' : ''}
+          help={errors.expenseType?.message}
         >
           <Controller
-            name="incomeType"
+            name="expenseType"
             control={control}
             render={({ field }) => (
-              <Select {...field} placeholder="Select income type">
+              <Select {...field} placeholder="Select expense type">
                 <Select.Option value="Oneoff">Oneoff</Select.Option>
                 <Select.Option value="Recurring">Recurring</Select.Option>
               </Select>
@@ -158,20 +167,20 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         </Form.Item>
 
         <Form.Item
-          label="Timeframe"
-          validateStatus={errors.timeframe ? 'error' : ''}
-          help={errors.timeframe?.message}
+          label="Category"
+          validateStatus={errors.category ? 'error' : ''}
+          help={errors.category?.message}
         >
           <Controller
-            name="timeframe"
+            name="category"
             control={control}
             render={({ field }) => (
-              <Select {...field} placeholder="Select timeframe" allowClear>
-                <Select.Option value="Weekly">Weekly</Select.Option>
-                <Select.Option value="Monthly">Monthly</Select.Option>
-                <Select.Option value="Quarterly">Quarterly</Select.Option>
-                <Select.Option value="HalfYearly">HalfYearly</Select.Option>
-                <Select.Option value="Yearly">Yearly</Select.Option>
+              <Select {...field} placeholder="Select category">
+                {Object.values(Category).map((cat) => (
+                  <Select.Option key={cat} value={cat}>
+                    {cat}
+                  </Select.Option>
+                ))}
               </Select>
             )}
           />
@@ -188,10 +197,10 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
             render={({ field }) => (
               <DatePicker
                 {...field}
-                value={field.value ? dayjs(field.value) : null} // Convert ISO string to Dayjs for controlled value
+                value={field.value ? dayjs(field.value) : null}
                 onChange={(date) =>
                   field.onChange(date ? date.toISOString() : '')
-                } // Convert Dayjs to ISO string
+                }
                 style={{ width: '100%' }}
               />
             )}
@@ -205,15 +214,14 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         </Form.Item>
       </Form>
 
-      {/*close Button  */}
       <CloseModalButton
         CloseFunction={() => {
           setShowModal(false)
-          setIncomeForm(false)
+          setExpenseForm(false)
         }}
       />
     </div>
   )
 }
 
-export default AddIncomeForm
+export default AddExpenseForm

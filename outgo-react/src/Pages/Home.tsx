@@ -12,7 +12,10 @@ import UserLabelDashboard from '../components/userComponents/UserLabelDashboard'
 import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
 import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import FormModal from '../components/partialComponents/Modals/FormModal'
-import IncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
+import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
+import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
+import AddProjectForm from '../components/partialComponents/Forms/AddProjectfrom'
+import ProjectDashboardButton from '../components/partialComponents/buttons/ProejctDashboardButton'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
@@ -20,6 +23,10 @@ export default function Home() {
   const dispatch = useDispatch<AppDispatch>()
   const { firstName, lastName } = useSelector((state: RootState) => state.user)
   const [retractMenu, setRetractMenu] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [IncomeForm, setIncomeForm] = useState(false)
+  const [ExpenseForm, setExpenseForm] = useState(false)
+  const [ProjectForm, setProjectForm] = useState(false)
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
@@ -30,9 +37,13 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen bg-gray-200">
-      <FormModal>
-        <IncomeForm />
-      </FormModal>
+      {showModal && (
+        <FormModal>
+          {ProjectForm && <AddProjectForm setShowModal={setShowModal} setProjectForm={setProjectForm} />}
+          {IncomeForm && <AddIncomeForm setShowModal={setShowModal} setIncomeForm = {setIncomeForm} />}
+          {ExpenseForm && <AddExpenseForm setShowModal={setShowModal} setExpenseForm = {setExpenseForm} />}
+        </FormModal>
+      )}
       <div className="flex w-full mx-auto">
         <div>
           <div className="bg-teal-300 h-screen flex flex-col items-center ">
@@ -59,12 +70,22 @@ export default function Home() {
         <div className="min-h-screen flex-1 flex flex-col items-center p-4">
           <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
             <ProjectsList />
+            <ProjectDashboardButton
+              showForm={setProjectForm}
+              setShowModal={setShowModal}
+            />
             <UserLabelDashboard firstName={firstName} lastName={lastName} />
           </div>
           <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">
             <div className="flex justify-around w-full items-center px-4">
-              <ExpenseDashboardButton />
-              <IncomeDashboardButton />
+              <ExpenseDashboardButton
+                showForm={setExpenseForm}
+                setShowModal={setShowModal}
+              />
+              <IncomeDashboardButton
+                showForm={setIncomeForm}
+                setShowModal={setShowModal}
+              />
             </div>
           </div>
           <div className="w-full flex-1 grid grid-cols-[1fr_1fr] gap-4">
