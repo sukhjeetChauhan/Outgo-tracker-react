@@ -13,6 +13,7 @@ import * as yup from 'yup'
 import dayjs from 'dayjs'
 import { Timeframe, TransactionType } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
+import { useCreateIncome } from '../../../apis/Income/useIncome'
 
 interface Income {
   name: string
@@ -54,6 +55,8 @@ const schema = yup.object().shape({
 })
 
 const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
+  const { mutate: createIncome, isPending } = useCreateIncome()
+
   const {
     handleSubmit,
     control,
@@ -79,22 +82,14 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
     }
 
     try {
-      const response = await fetch('/api/income', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postData),
-      })
-      ///need to modify this with actual api
-
-      if (response.ok) {
-        message.success('Income added successfully!')
-        reset()
-      } else {
-        throw new Error('Failed to submit')
-      }
+      await createIncome(postData)
+      message.success('Income added successfully')
+      reset()
+      setShowModal(false)
+      setIncomeForm(false)
     } catch (error) {
-      message.error('Error submitting income')
-      console.error(error)
+      console.error('Error adding income:', error)
+      message.error('Error adding income')
     }
   }
 
@@ -199,7 +194,12 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         </Form.Item>
 
         <Form.Item>
-          <Button color="cyan" variant="solid" htmlType="submit">
+          <Button
+            color="cyan"
+            variant="solid"
+            htmlType="submit"
+            loading={isPending}
+          >
             Submit
           </Button>
         </Form.Item>

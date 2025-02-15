@@ -13,6 +13,7 @@ import * as yup from 'yup'
 import dayjs from 'dayjs'
 import { Timeframe, TransactionType, Category } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
+import { useCreateExpense } from '../../../apis/Expenses/useExpenses'
 
 interface AddExpenseFormProps {
   setShowModal: (value: boolean) => void
@@ -64,6 +65,8 @@ const AddExpenseForm = ({
   setShowModal,
   setExpenseForm,
 }: AddExpenseFormProps) => {
+  const { mutate: createExpense, isPending } = useCreateExpense()
+
   const {
     handleSubmit,
     control,
@@ -90,20 +93,14 @@ const AddExpenseForm = ({
     }
 
     try {
-      const response = await fetch('/api/expense', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postData),
-      })
-      if (response.ok) {
-        message.success('Expense added successfully!')
-        reset()
-      } else {
-        throw new Error('Failed to submit')
-      }
+      await createExpense(postData)
+      message.success('Expense added successfully')
+      reset()
+      setShowModal(false)
+      setExpenseForm(false)
     } catch (error) {
-      message.error('Error submitting expense')
-      console.error(error)
+      message.error('Failed to add expense')
+      console.error('Error adding expense:', error)
     }
   }
 
@@ -208,7 +205,12 @@ const AddExpenseForm = ({
         </Form.Item>
 
         <Form.Item>
-          <Button color="cyan" variant="solid" htmlType="submit">
+          <Button
+            color="cyan"
+            variant="solid"
+            htmlType="submit"
+            loading={isPending}
+          >
             Submit
           </Button>
         </Form.Item>

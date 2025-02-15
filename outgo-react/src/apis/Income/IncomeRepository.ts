@@ -4,7 +4,7 @@ import { Timeframe, TransactionType } from '../../Types/enums'
 const backendApiUrl = 'http://localhost:5298/api'
 
 export interface Income {
-  id: number
+
   name: string
   description?: string // Optional
   amount: number

@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Timeframe } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
+import { useCreateProject } from '../../../apis/Project/useProjects'
 
 interface Project {
   name: string
@@ -46,6 +47,8 @@ const AddProjectForm = ({
   setShowModal,
   setProjectForm,
 }: AddProjectFormProps) => {
+  const { mutate: createProject, isPending } = useCreateProject()
+
   const {
     handleSubmit,
     control,
@@ -62,24 +65,18 @@ const AddProjectForm = ({
     },
   })
 
-  const onSubmit = async (data: Project) => {
-    try {
-      const response = await fetch('/api/project', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      })
-
-      if (response.ok) {
-        message.success('Project added successfully!')
+  const onSubmit = (data: Project) => {
+    createProject(data, {
+      onSuccess: () => {
+        message.success('Project added successfully')
         reset()
-      } else {
-        throw new Error('Failed to submit')
-      }
-    } catch (error) {
-      message.error('Error submitting project')
-      console.error(error)
-    }
+        setShowModal(false)
+        setProjectForm(false)
+      },
+      onError: () => {
+        message.error('Failed to add expense')
+      },
+    })
   }
 
   return (
@@ -159,7 +156,12 @@ const AddProjectForm = ({
         </Form.Item>
 
         <Form.Item>
-          <Button color="cyan" variant="solid" htmlType="submit">
+          <Button
+            color="cyan"
+            variant="solid"
+            htmlType="submit"
+            loading={isPending}
+          >
             Submit
           </Button>
         </Form.Item>
