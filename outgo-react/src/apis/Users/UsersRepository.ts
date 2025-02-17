@@ -7,8 +7,8 @@ export interface User {
   firstName: string
   lastName: string
   email?: string
-  phoneNumber?: number
-  defaultProjectId: number
+  phoneNumber?: string
+  defaultProjectId: number | null
 }
 
 export class UsersRepository {
@@ -22,7 +22,7 @@ export class UsersRepository {
     return data
   }
 
-  static async Update(id: string, user: User) {
+  static async update(id: string, user: User) {
     const { data } = await axios.put(`${backendApiUrl}/User/${id}`, user)
     return data
   }

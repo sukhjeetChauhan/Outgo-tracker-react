@@ -4,12 +4,24 @@ const GetUserInfo = async (
   accounts: AccountInfo[],
   instance: IPublicClientApplication
 ) => {
-  if (accounts.length === 0) return
-
   try {
+    // 🔹 Ensure MSAL is initialized
+    if (!instance.getActiveAccount()) {
+      await instance.initialize()
+    }
+
+    // 🔹 Use the passed `accounts` argument if available, otherwise get from instance
+    const account =
+      accounts.length > 0 ? accounts[0] : instance.getAllAccounts()[0]
+
+    if (!account) {
+      console.error('No active accounts found.')
+      return null
+    }
+
     const response = await instance.acquireTokenSilent({
       scopes: ['openid', 'profile'], // 🔹 Ensures we get ID Token claims
-      account: accounts[0],
+      account: account,
     })
 
     const idToken = response.idToken // 🔹 Get the ID Token
@@ -25,6 +37,7 @@ const GetUserInfo = async (
     return { id, firstName, lastName }
   } catch (error) {
     console.error('Error getting user info:', error)
+    return null
   }
 }
 

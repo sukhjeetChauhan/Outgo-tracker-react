@@ -16,12 +16,15 @@ import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
 import AddProjectForm from '../components/partialComponents/Forms/AddProjectfrom'
 import ProjectDashboardButton from '../components/partialComponents/buttons/ProejctDashboardButton'
+import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
   const { instance, accounts } = useMsal()
   const dispatch = useDispatch<AppDispatch>()
-  const { firstName, lastName } = useSelector((state: RootState) => state.user)
+  const { id, firstName, lastName } = useSelector(
+    (state: RootState) => state.user
+  )
   const [retractMenu, setRetractMenu] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [IncomeForm, setIncomeForm] = useState(false)
@@ -32,6 +35,31 @@ export default function Home() {
     dispatch(fetchUser({ accounts, instance }))
   }, [dispatch, accounts, instance])
 
+  const { data: user } = useUsersById(id as unknown as string)
+  const { mutate: createUser } = useCreateUser()
+
+  useEffect(() => {
+    if (user) {
+      console.log(user)
+    } else {
+      console.log('User not found')
+      if (id) {
+        // Ensure id is not null
+        const newUser = {
+          id: id,
+          firstName: firstName,
+          lastName: lastName,
+          email: '',
+          phoneNumber: '',
+          defaultProjectId: null,
+        }
+        createUser(newUser)
+      } else {
+        console.error('User ID is null, cannot create user')
+      }
+    }
+  }, [user, id, firstName, lastName, createUser])
+
   // if (status === 'loading') return <p>Loading user...</p>
   // if (status === 'failed') return <p>Error fetching user</p>
 
@@ -39,9 +67,24 @@ export default function Home() {
     <div className="w-full min-h-screen bg-gray-200">
       {showModal && (
         <FormModal>
-          {ProjectForm && <AddProjectForm setShowModal={setShowModal} setProjectForm={setProjectForm} />}
-          {IncomeForm && <AddIncomeForm setShowModal={setShowModal} setIncomeForm = {setIncomeForm} />}
-          {ExpenseForm && <AddExpenseForm setShowModal={setShowModal} setExpenseForm = {setExpenseForm} />}
+          {ProjectForm && (
+            <AddProjectForm
+              setShowModal={setShowModal}
+              setProjectForm={setProjectForm}
+            />
+          )}
+          {IncomeForm && (
+            <AddIncomeForm
+              setShowModal={setShowModal}
+              setIncomeForm={setIncomeForm}
+            />
+          )}
+          {ExpenseForm && (
+            <AddExpenseForm
+              setShowModal={setShowModal}
+              setExpenseForm={setExpenseForm}
+            />
+          )}
         </FormModal>
       )}
       <div className="flex w-full mx-auto">
