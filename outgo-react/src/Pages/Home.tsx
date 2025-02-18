@@ -1,22 +1,23 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch, useSelector } from 'react-redux'
-import LoginButton from '../components/userComponents/LoginButton'
+import LoginButton from '../components/partialComponents/userComponents/LoginButton'
 // import PasswordReset from '../components/userComponents/PasswordReset'
 import { fetchUser } from '../Redux/Slices/userSlice'
 import { RootState, AppDispatch } from '../Redux/store'
 import { useEffect, useState } from 'react'
-import LogoutButton from '../components/userComponents/LogoutButton'
+import LogoutButton from '../components/partialComponents/userComponents/LogoutButton'
 import Menubar from '../components/Menubar'
 import ProjectsList from '../components/partialComponents/ProjectsList'
-import UserLabelDashboard from '../components/userComponents/UserLabelDashboard'
+import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
 import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
 import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
 import AddProjectForm from '../components/partialComponents/Forms/AddProjectfrom'
-import ProjectDashboardButton from '../components/partialComponents/buttons/ProejctDashboardButton'
+import ProjectDashboardButton from '../components/partialComponents/buttons/ProjectDashboardButton'
 import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
+import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
@@ -35,30 +36,33 @@ export default function Home() {
     dispatch(fetchUser({ accounts, instance }))
   }, [dispatch, accounts, instance])
 
-  const { data: user } = useUsersById(id as unknown as string)
+  const { data: user, isLoading: userLoading } = useUsersById(
+    id as unknown as string
+  )
   const { mutate: createUser } = useCreateUser()
 
   useEffect(() => {
-    if (user) {
-      console.log(user)
-    } else {
-      console.log('User not found')
-      if (id) {
-        // Ensure id is not null
-        const newUser = {
-          id: id,
-          firstName: firstName,
-          lastName: lastName,
-          email: '',
-          phoneNumber: '',
-          defaultProjectId: null,
-        }
-        createUser(newUser)
+    if (id) {
+      if (user) {
+        console.log(user.defaultProjectId)
       } else {
-        console.error('User ID is null, cannot create user')
+        if (!userLoading) {
+          console.log('User not found')
+
+          // Ensure id is not null
+          const newUser = {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: '',
+            phoneNumber: '',
+            defaultProjectId: null,
+          }
+          createUser(newUser)
+        }
       }
     }
-  }, [user, id, firstName, lastName, createUser])
+  }, [user, id, firstName, lastName, createUser, userLoading])
 
   // if (status === 'loading') return <p>Loading user...</p>
   // if (status === 'failed') return <p>Error fetching user</p>
@@ -110,7 +114,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="min-h-screen flex-1 flex flex-col items-center p-4">
+        <div className="min-h-screen flex-1 flex flex-col items-center p-4 relative">
+          <AddNewProjectModal />
           <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
             <ProjectsList />
             <ProjectDashboardButton

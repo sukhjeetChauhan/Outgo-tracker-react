@@ -1,6 +1,6 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../Redux/Slices/userSlice'
+import { logout } from '../../../Redux/Slices/userSlice'
 
 export default function LogoutButton() {
   const { instance } = useMsal()
