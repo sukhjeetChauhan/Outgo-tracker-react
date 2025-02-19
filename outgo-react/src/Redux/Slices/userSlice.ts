@@ -24,6 +24,7 @@ const userSlice = createSlice({
     firstName: '',
     lastName: '',
     status: 'idle',
+    defaultProjectId: null,
     error: null as string | null,
   },
   reducers: {
@@ -31,6 +32,11 @@ const userSlice = createSlice({
       state.id = null
       state.firstName = ''
       state.lastName = ''
+      state.defaultProjectId = null // Reset project ID on logout
+    },
+
+    setDefaultProjectId: (state, action) => {
+      state.defaultProjectId = action.payload // Update project ID
     },
   },
   extraReducers: (builder) => {
@@ -51,5 +57,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { logout } = userSlice.actions
+export const { logout, setDefaultProjectId } = userSlice.actions
 export default userSlice.reducer

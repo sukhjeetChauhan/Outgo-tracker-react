@@ -7,17 +7,14 @@ import { RootState, AppDispatch } from '../Redux/store'
 import { useEffect, useState } from 'react'
 import LogoutButton from '../components/partialComponents/userComponents/LogoutButton'
 import Menubar from '../components/Menubar'
-import ProjectsList from '../components/partialComponents/ProjectsList'
-import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
-import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
-import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
 import AddProjectForm from '../components/partialComponents/Forms/AddProjectfrom'
-import ProjectDashboardButton from '../components/partialComponents/buttons/ProjectDashboardButton'
 import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
-import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
+import { setDefaultProjectId } from '../Redux/Slices/userSlice'
+import Dashboard from './Dashboard'
+import { useLocation, Outlet } from 'react-router-dom'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
@@ -31,6 +28,9 @@ export default function Home() {
   const [IncomeForm, setIncomeForm] = useState(false)
   const [ExpenseForm, setExpenseForm] = useState(false)
   const [ProjectForm, setProjectForm] = useState(false)
+  const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
+
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
@@ -44,7 +44,11 @@ export default function Home() {
   useEffect(() => {
     if (id) {
       if (user) {
-        console.log(user.defaultProjectId)
+        if (user.defaultProjectId === null) {
+          SetShowAddProjectModal(true)
+        } else {
+          dispatch(setDefaultProjectId(user.defaultProjectId))
+        }
       } else {
         if (!userLoading) {
           console.log('User not found')
@@ -58,11 +62,19 @@ export default function Home() {
             phoneNumber: '',
             defaultProjectId: null,
           }
-          createUser(newUser)
+          createUser(newUser, {
+            onSuccess: (data) => {
+              console.log('User created', data)
+              SetShowAddProjectModal(true)
+            },
+            onError: (error) => {
+              console.log('Error creating user', error)
+            },
+          })
         }
       }
     }
-  }, [user, id, firstName, lastName, createUser, userLoading])
+  }, [user, id, firstName, lastName, createUser, userLoading, dispatch])
 
   // if (status === 'loading') return <p>Loading user...</p>
   // if (status === 'failed') return <p>Error fetching user</p>
@@ -102,7 +114,7 @@ export default function Home() {
             <div className="flex-1 border-t-2 border-gray-200 relative">
               <Menubar retractMenu={retractMenu} />
               <button
-                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center"
+                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center z-999"
                 onClick={() => setRetractMenu(!retractMenu)}
               >
                 {retractMenu ? '>' : '<'}
@@ -115,33 +127,19 @@ export default function Home() {
           </div>
         </div>
         <div className="min-h-screen flex-1 flex flex-col items-center p-4 relative">
-          <AddNewProjectModal />
-          <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
-            <ProjectsList />
-            <ProjectDashboardButton
-              showForm={setProjectForm}
+          {location.pathname == '/' ? (
+            <Dashboard
+              showAddProjectModal={showAddProjectModal}
+              setProjectForm={setProjectForm}
               setShowModal={setShowModal}
+              setExpenseForm={setExpenseForm}
+              setIncomeForm={setIncomeForm}
+              firstName={firstName}
+              lastName={lastName}
             />
-            <UserLabelDashboard firstName={firstName} lastName={lastName} />
-          </div>
-          <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">
-            <div className="flex justify-around w-full items-center px-4">
-              <ExpenseDashboardButton
-                showForm={setExpenseForm}
-                setShowModal={setShowModal}
-              />
-              <IncomeDashboardButton
-                showForm={setIncomeForm}
-                setShowModal={setShowModal}
-              />
-            </div>
-          </div>
-          <div className="w-full flex-1 grid grid-cols-[1fr_1fr] gap-4">
-            <div className="bg-white rounded"></div>
-            <div className="bg-white rounded"></div>
-            <div className="bg-white rounded"></div>
-            <div className="bg-white rounded"></div>
-          </div>
+          ) : (
+            <Outlet />
+          )}
         </div>
       </div>
     </div>
