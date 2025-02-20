@@ -10,7 +10,6 @@ import Menubar from '../components/Menubar'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
-import AddProjectForm from '../components/partialComponents/Forms/AddProjectfrom'
 import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
 import Dashboard from './Dashboard'
@@ -27,7 +26,6 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false)
   const [IncomeForm, setIncomeForm] = useState(false)
   const [ExpenseForm, setExpenseForm] = useState(false)
-  const [ProjectForm, setProjectForm] = useState(false)
   const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
 
   const location = useLocation()
@@ -83,12 +81,6 @@ export default function Home() {
     <div className="w-full min-h-screen bg-gray-200">
       {showModal && (
         <FormModal>
-          {ProjectForm && (
-            <AddProjectForm
-              setShowModal={setShowModal}
-              setProjectForm={setProjectForm}
-            />
-          )}
           {IncomeForm && (
             <AddIncomeForm
               setShowModal={setShowModal}
@@ -130,7 +122,6 @@ export default function Home() {
           {location.pathname == '/' ? (
             <Dashboard
               showAddProjectModal={showAddProjectModal}
-              setProjectForm={setProjectForm}
               setShowModal={setShowModal}
               setExpenseForm={setExpenseForm}
               setIncomeForm={setIncomeForm}

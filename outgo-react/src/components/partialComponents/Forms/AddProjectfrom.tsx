@@ -69,6 +69,8 @@ const AddProjectForm = ({
     createProject(data, {
       onSuccess: () => {
         message.success('Project added successfully')
+        // add logic to update user table with default project id
+
         reset()
         setShowModal(false)
         setProjectForm(false)

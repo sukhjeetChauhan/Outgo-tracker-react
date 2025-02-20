@@ -1,13 +1,11 @@
 import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
-import ProjectDashboardButton from '../components/partialComponents/buttons/ProjectDashboardButton'
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
 import ProjectsList from '../components/partialComponents/ProjectsList'
 import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
 
 interface DashboardProps {
   showAddProjectModal: boolean
-  setProjectForm: React.Dispatch<React.SetStateAction<boolean>>
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
   setIncomeForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,7 +15,6 @@ interface DashboardProps {
 
 export default function Dashboard({
   showAddProjectModal,
-  setProjectForm,
   setShowModal,
   setExpenseForm,
   setIncomeForm,
@@ -29,10 +26,7 @@ export default function Dashboard({
       {showAddProjectModal && <AddNewProjectModal />}
       <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
         <ProjectsList />
-        <ProjectDashboardButton
-          showForm={setProjectForm}
-          setShowModal={setShowModal}
-        />
+
         <UserLabelDashboard firstName={firstName} lastName={lastName} />
       </div>
       <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">
