@@ -9,7 +9,7 @@ export const useProjects = () => {
   })
 }
 
-export const useProject = (id: number) => {
+export const useProjectById = (id: number | null) => {
   return useQuery({
     queryKey: ['project', id],
     queryFn: () => ProjectRepository.getById(id),

@@ -5,6 +5,10 @@ import * as yup from 'yup'
 import { Timeframe } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateProject } from '../../../apis/Project/useProjects'
+import { useDispatch, useSelector } from 'react-redux'
+import { setDefaultProjectId } from '../../../Redux/Slices/userSlice'
+import { useUpdateUser } from '../../../apis/Users/useUsers'
+import { RootState } from '../../../Redux/store'
 
 interface Project {
   name: string
@@ -47,7 +51,16 @@ const AddProjectForm = ({
   setShowModal,
   setProjectForm,
 }: AddProjectFormProps) => {
+  const { id, firstName, lastName } = useSelector(
+    (state: RootState) => ({
+      id: state.user.id,
+      firstName: state.user.firstName,
+      lastName: state.user.lastName || '', // Provide a default value if lastName is undefined
+    })
+  )
   const { mutate: createProject, isPending } = useCreateProject()
+  const { mutate: updateUser } = useUpdateUser()
+  const dispatch = useDispatch()
 
   const {
     handleSubmit,
@@ -67,9 +80,24 @@ const AddProjectForm = ({
 
   const onSubmit = (data: Project) => {
     createProject(data, {
-      onSuccess: () => {
+      onSuccess: (newProject) => {
         message.success('Project added successfully')
+        console.log(newProject.id)
         // add logic to update user table with default project id
+        dispatch(setDefaultProjectId({ id: newProject.id }))
+        if (id) {
+          updateUser({
+            id,
+            user: {
+              id: id,
+              firstName: firstName,
+              lastName: lastName,
+              email: '',
+              phoneNumber: '',
+              defaultProjectId: newProject.id,
+            },
+          })
+        }
 
         reset()
         setShowModal(false)

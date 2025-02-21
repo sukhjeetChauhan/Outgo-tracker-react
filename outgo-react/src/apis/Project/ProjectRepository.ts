@@ -19,7 +19,7 @@ export class ProjectRepository {
     return data
   }
 
-  static async getById(id: number) {
+  static async getById(id: number | null) {
     const { data } = await axios.get(`${backendApiUrl}/Project/${id}`)
     return data
   }
@@ -46,9 +46,12 @@ export class ProjectRepository {
     return data
   }
 
-  static async update(id: number, project: Project, instance: IPublicClientApplication,
-    accounts: AccountInfo[]) {
-
+  static async update(
+    id: number,
+    project: Project,
+    instance: IPublicClientApplication,
+    accounts: AccountInfo[]
+  ) {
     const tokendata = await fetchBackendToken(instance, accounts)
     try {
       if (typeof tokendata === 'string') {
@@ -66,13 +69,20 @@ export class ProjectRepository {
     }
   }
 
-  static async delete(id: number, instance: IPublicClientApplication, accounts: AccountInfo[]) {
+  static async delete(
+    id: number,
+    instance: IPublicClientApplication,
+    accounts: AccountInfo[]
+  ) {
     const tokendata = await fetchBackendToken(instance, accounts)
     try {
       if (typeof tokendata === 'string') {
         throw new Error('Invalid token data')
       }
-      const { data } = await axios.delete(`${backendApiUrl}/Project/${id}`, tokendata.tokenOptions)
+      const { data } = await axios.delete(
+        `${backendApiUrl}/Project/${id}`,
+        tokendata.tokenOptions
+      )
       return data
     } catch (error) {
       console.error('Error deleting project:', error)
