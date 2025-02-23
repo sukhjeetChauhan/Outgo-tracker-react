@@ -25,7 +25,7 @@ export default function Dashboard({
     <>
       {showAddProjectModal && <AddNewProjectModal />}
       <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
-        <ProjectsList />
+        {/* <ProjectsList /> */}
 
         <UserLabelDashboard firstName={firstName} lastName={lastName} />
       </div>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import ProjectDashboardButton from '../components/partialComponents/buttons/ProjectCreateButton'
+import ProjectCreateButton from '../components/partialComponents/buttons/ProjectCreateButton'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddProjectForm from '../components/partialComponents/Forms/AddProjectform'
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import { useProjectById } from '../apis/Project/useProjects'
+import ProjectsList from '../components/partialComponents/ProjectsList'
 
 export default function Project() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
@@ -44,7 +45,8 @@ export default function Project() {
           <h2 className="text-teal-800 font-semibold text-2xl">
             Created Projects
           </h2>
-          <ProjectDashboardButton
+          <ProjectsList />
+          <ProjectCreateButton
             showForm={setProjectForm}
             setShowModal={setShowModal}
           />

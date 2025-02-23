@@ -17,7 +17,7 @@ export class ProjectUserRepository {
     return data
   }
 
-  static async getProjectByUserId(userId: string) {
+  static async getProjectByUserId(userId: string | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/ProjectUser/GetProjectsByUserId/${userId}`
     )

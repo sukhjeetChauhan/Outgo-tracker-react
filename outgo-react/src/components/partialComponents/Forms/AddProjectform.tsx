@@ -2,13 +2,14 @@ import { Button, Form, Input, InputNumber, Select, message } from 'antd'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { Timeframe } from '../../../Types/enums'
+import { Role, Timeframe } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateProject } from '../../../apis/Project/useProjects'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDefaultProjectId } from '../../../Redux/Slices/userSlice'
 import { useUpdateUser } from '../../../apis/Users/useUsers'
 import { RootState } from '../../../Redux/store'
+import { useCreateProjectUser } from '../../../apis/ProjectUser/useProjectUsers'
 
 interface Project {
   name: string
@@ -51,15 +52,14 @@ const AddProjectForm = ({
   setShowModal,
   setProjectForm,
 }: AddProjectFormProps) => {
-  const { id, firstName, lastName } = useSelector(
-    (state: RootState) => ({
-      id: state.user.id,
-      firstName: state.user.firstName,
-      lastName: state.user.lastName || '', // Provide a default value if lastName is undefined
-    })
-  )
+  const { id, firstName, lastName } = useSelector((state: RootState) => ({
+    id: state.user.id,
+    firstName: state.user.firstName,
+    lastName: state.user.lastName || '', // Provide a default value if lastName is undefined
+  }))
   const { mutate: createProject, isPending } = useCreateProject()
   const { mutate: updateUser } = useUpdateUser()
+  const { mutate: createProjectUser } = useCreateProjectUser()
   const dispatch = useDispatch()
 
   const {
@@ -96,6 +96,11 @@ const AddProjectForm = ({
               phoneNumber: '',
               defaultProjectId: newProject.id,
             },
+          })
+          createProjectUser({
+            projectId: newProject.id,
+            userId: id,
+            role: Role.Admin,
           })
         }
 

@@ -7,7 +7,7 @@ export const useGetUsersByProjectId = (projectId: number) => {
     queryFn: () => ProjectUserRepository.getUserByProjectId(projectId),
   })
 }
-export const useGetProjectsByUserId = (userId: string) => {
+export const useGetProjectsByUserId = (userId: string | null) => {
   return useQuery({
     queryKey: ['projectUser', 'projects', userId],
     queryFn: () => ProjectUserRepository.getProjectByUserId(userId),

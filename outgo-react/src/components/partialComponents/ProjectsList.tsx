@@ -1,16 +1,28 @@
+import { useSelector } from 'react-redux'
+import { useGetProjectsByUserId } from '../../apis/ProjectUser/useProjectUsers'
+import { RootState } from '../../Redux/store'
+import ProjectSwitchButton from './buttons/ProjectSwitchButton'
+
 export default function ProjectsList() {
-  return (
-    <div className="flex items-center h-full gap-2 relative">
-      <h2 className="text-2xl font-semibold">{`Project Name: Project 1`}</h2>
-      <button>{`▼`}</button>
-      <div className="absolute right-0 top-16 hidden">
-        <div className="bg-white flex flex-col p-4 border-2 border-gray-200">
-          <ul>
-            <li>Project 1</li>
-            <li>Project 2</li>
-          </ul>
-        </div>
+  const { id } = useSelector((state: RootState) => state.user)
+  const { data: projects, error, isLoading } = useGetProjectsByUserId(id)
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error fetching projects</div>
+  if (projects) {
+    const reversedProjects = [...projects].reverse()
+    return (
+      <div className="flex flex-col p-2 w-full h-48 overflow-y-auto">
+        {reversedProjects.map((project: { id: number; name: string }) => (
+          <div
+            key={project.id}
+            className="flex justify-between items-center w-full"
+          >
+            <p>{project.name}</p>
+            <ProjectSwitchButton id={project.id} />
+          </div>
+        ))}
       </div>
-    </div>
-  )
+    )
+  }
 }
