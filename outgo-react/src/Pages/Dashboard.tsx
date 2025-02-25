@@ -1,8 +1,8 @@
 import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
-import ProjectsList from '../components/partialComponents/ProjectsList'
 import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
+import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
 
 interface DashboardProps {
   showAddProjectModal: boolean
@@ -25,8 +25,7 @@ export default function Dashboard({
     <>
       {showAddProjectModal && <AddNewProjectModal />}
       <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
-        {/* <ProjectsList /> */}
-
+        <ProjectDashboardName />
         <UserLabelDashboard firstName={firstName} lastName={lastName} />
       </div>
       <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">

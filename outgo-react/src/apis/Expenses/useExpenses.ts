@@ -1,28 +1,28 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Expense, ExpensesRepository } from './ExpensesRepository'
 
-export const useYearlyExpenses = (projectId: number) => {
+export const useYearlyExpenses = (projectId: number | null) => {
   return useQuery({
     queryKey: ['expenses', 'yearly', projectId],
     queryFn: () => ExpensesRepository.getYealyExpenses(projectId),
   })
 }
 
-export const useMonthlyExpenses = (projectId: number) => {
+export const useMonthlyExpenses = (projectId: number | null) => {
   return useQuery({
     queryKey: ['expenses', 'monthly', projectId],
     queryFn: () => ExpensesRepository.getMonthlyExpenses(projectId),
   })
 }
 
-export const useWeeklyExpenses = (projectId: number) => {
+export const useWeeklyExpenses = (projectId: number | null) => {
   return useQuery({
     queryKey: ['expenses', 'weekly', projectId],
     queryFn: () => ExpensesRepository.getWeeklyExpenses(projectId),
   })
 }
 
-export const useFiveYearExpenses = (projectId: number) => {
+export const useFiveYearExpenses = (projectId: number | null) => {
   return useQuery({
     queryKey: ['expenses', 'fiveYear', projectId],
     queryFn: () => ExpensesRepository.getFiveYearExpenses(projectId),

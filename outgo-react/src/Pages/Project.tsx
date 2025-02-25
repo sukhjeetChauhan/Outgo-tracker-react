@@ -5,7 +5,7 @@ import AddProjectForm from '../components/partialComponents/Forms/AddProjectform
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import { useProjectById } from '../apis/Project/useProjects'
-import ProjectsList from '../components/partialComponents/ProjectsList'
+import ProjectsList from '../components/partialComponents/projectPartials/ProjectsList'
 
 export default function Project() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)

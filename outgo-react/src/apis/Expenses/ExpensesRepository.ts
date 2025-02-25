@@ -17,7 +17,7 @@ export interface Expense {
 
 export class ExpensesRepository {
   // Get expense by ProjectId for one year
-  static async getYealyExpenses(projectId: number) {
+  static async getYealyExpenses(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/Expenses/Project/${projectId}/Year`
     )
@@ -25,7 +25,7 @@ export class ExpensesRepository {
   }
 
   // Get expense by ProjectId for one month
-  static async getMonthlyExpenses(projectId: number) {
+  static async getMonthlyExpenses(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/Expenses/Project/${projectId}/Month`
     )
@@ -33,7 +33,7 @@ export class ExpensesRepository {
   }
 
   // Get expense by ProjectId for one week
-  static async getWeeklyExpenses(projectId: number) {
+  static async getWeeklyExpenses(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/Expenses/Project/${projectId}/Week`
     )
@@ -41,7 +41,7 @@ export class ExpensesRepository {
   }
 
   // Get expense by ProjectId for past 5 years
-  static async getFiveYearExpenses(projectId: number) {
+  static async getFiveYearExpenses(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/Expenses/Project/${projectId}/Past5Years`
     )

@@ -14,6 +14,8 @@ import dayjs from 'dayjs'
 import { Timeframe, TransactionType, Category } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateExpense } from '../../../apis/Expenses/useExpenses'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../Redux/store'
 
 interface AddExpenseFormProps {
   setShowModal: (value: boolean) => void
@@ -66,6 +68,10 @@ const AddExpenseForm = ({
   setExpenseForm,
 }: AddExpenseFormProps) => {
   const { mutate: createExpense, isPending } = useCreateExpense()
+  const { id, defaultProjectId } = useSelector((state: RootState) => ({
+    id: state.user.id,
+    defaultProjectId: state.user.defaultProjectId,
+  }))
 
   const {
     handleSubmit,
@@ -86,21 +92,23 @@ const AddExpenseForm = ({
   })
 
   const onSubmit = async (data: Expense) => {
-    const postData = {
-      ...data,
-      userId: '123', // Dummy user ID (replace with actual logic)
-      projectId: 1, // Dummy project ID (replace with actual logic)
-    }
+    if (id && defaultProjectId) {
+      const postData = {
+        ...data,
+        userId: id,
+        projectId: defaultProjectId,
+      }
 
-    try {
-      await createExpense(postData)
-      message.success('Expense added successfully')
-      reset()
-      setShowModal(false)
-      setExpenseForm(false)
-    } catch (error) {
-      message.error('Failed to add expense')
-      console.error('Error adding expense:', error)
+      try {
+        await createExpense(postData)
+        message.success('Expense added successfully')
+        reset()
+        setShowModal(false)
+        setExpenseForm(false)
+      } catch (error) {
+        message.error('Failed to add expense')
+        console.error('Error adding expense:', error)
+      }
     }
   }
 
@@ -156,7 +164,7 @@ const AddExpenseForm = ({
             control={control}
             render={({ field }) => (
               <Select {...field} placeholder="Select expense type">
-                <Select.Option value="Oneoff">Oneoff</Select.Option>
+                <Select.Option value="OneOff">OneOff</Select.Option>
                 <Select.Option value="Recurring">Recurring</Select.Option>
               </Select>
             )}

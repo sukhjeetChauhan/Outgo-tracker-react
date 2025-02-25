@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
-import { useGetProjectsByUserId } from '../../apis/ProjectUser/useProjectUsers'
-import { RootState } from '../../Redux/store'
-import ProjectSwitchButton from './buttons/ProjectSwitchButton'
+import { useGetProjectsByUserId } from '../../../apis/ProjectUser/useProjectUsers'
+import { RootState } from '../../../Redux/store'
+import ProjectSwitchButton from '../buttons/ProjectSwitchButton'
 
 export default function ProjectsList() {
   const { id } = useSelector((state: RootState) => state.user)
