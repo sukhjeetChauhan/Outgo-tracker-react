@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { Income, IncomeRepository } from './IncomeRepository'
 
-export const useYearlyIncome = (projectId: number) => {
+export const useYearlyIncome = (projectId: number | null) => {
   return useQuery({
     queryKey: ['income', 'yearly', projectId],
     queryFn: () => IncomeRepository.getYealyIncome(projectId),

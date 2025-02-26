@@ -4,7 +4,6 @@ import { Timeframe, TransactionType } from '../../Types/enums'
 const backendApiUrl = 'http://localhost:5298/api'
 
 export interface Income {
-
   name: string
   description?: string // Optional
   amount: number
@@ -17,7 +16,7 @@ export interface Income {
 
 export class IncomeRepository {
   // Get income by ProjectId for one year
-  static async getYealyIncome(projectId: number) {
+  static async getYealyIncome(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/Income/Project/${projectId}/Year`
     )

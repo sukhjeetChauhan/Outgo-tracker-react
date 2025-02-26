@@ -14,6 +14,9 @@ import dayjs from 'dayjs'
 import { Timeframe, TransactionType } from '../../../Types/enums'
 import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateIncome } from '../../../apis/Income/useIncome'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../Redux/store'
+
 
 interface Income {
   name: string
@@ -56,6 +59,10 @@ const schema = yup.object().shape({
 
 const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
   const { mutate: createIncome, isPending } = useCreateIncome()
+  const { id, defaultProjectId } = useSelector((state: RootState) => ({
+    id: state.user.id,
+    defaultProjectId: state.user.defaultProjectId,
+  }))
 
   const {
     handleSubmit,
@@ -75,21 +82,23 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
   })
 
   const onSubmit = async (data: Income) => {
-    const postData = {
-      ...data,
-      userId: '123', // Dummy user ID (replace with actual logic)
-      projectId: 1, // Dummy project ID (replace with actual logic)
-    }
+    if (id && defaultProjectId) {
+      const postData = {
+        ...data,
+        userId: id,
+        projectId: defaultProjectId,
+      }
 
-    try {
-      await createIncome(postData)
-      message.success('Income added successfully')
-      reset()
-      setShowModal(false)
-      setIncomeForm(false)
-    } catch (error) {
-      console.error('Error adding income:', error)
-      message.error('Error adding income')
+      try {
+        await createIncome(postData)
+        message.success('Income added successfully')
+        reset()
+        setShowModal(false)
+        setIncomeForm(false)
+      } catch (error) {
+        console.error('Error adding income:', error)
+        message.error('Error adding income')
+      }
     }
   }
 

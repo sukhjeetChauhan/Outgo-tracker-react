@@ -1,16 +1,16 @@
 import ExpenseDashboardButton from '../components/partialComponents/buttons/ExpenseDashboardButton'
 import IncomeDashboardButton from '../components/partialComponents/buttons/IncomeDashboadButton'
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
-import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
-import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
+// import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
+// import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
 
 interface DashboardProps {
   showAddProjectModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
   setIncomeForm: React.Dispatch<React.SetStateAction<boolean>>
-  firstName: string
-  lastName: string
+  // firstName: string
+  // lastName: string
 }
 
 export default function Dashboard({
@@ -18,17 +18,14 @@ export default function Dashboard({
   setShowModal,
   setExpenseForm,
   setIncomeForm,
-  firstName,
-  lastName,
-}: DashboardProps) {
+}: // firstName,
+// lastName,
+DashboardProps) {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-full gap-4 w-full p-4 relative">
       {showAddProjectModal && <AddNewProjectModal />}
-      <div className="border-b-2 border-gray-200 w-full h-24 flex items-center justify-between px-4">
-        <ProjectDashboardName />
-        <UserLabelDashboard firstName={firstName} lastName={lastName} />
-      </div>
-      <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mb-2 flex items-center justify-center">
+
+      <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mt-20 flex items-center justify-center">
         <div className="flex justify-around w-full items-center px-4">
           <ExpenseDashboardButton
             showForm={setExpenseForm}
@@ -46,6 +43,6 @@ export default function Dashboard({
         <div className="bg-white rounded"></div>
         <div className="bg-white rounded"></div>
       </div>
-    </>
+    </div>
   )
 }

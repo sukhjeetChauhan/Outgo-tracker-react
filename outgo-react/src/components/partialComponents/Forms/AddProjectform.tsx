@@ -84,7 +84,7 @@ const AddProjectForm = ({
         message.success('Project added successfully')
         console.log(newProject.id)
         // add logic to update user table with default project id
-        dispatch(setDefaultProjectId({ id: newProject.id }))
+        dispatch(setDefaultProjectId(newProject.id))
         if (id) {
           updateUser({
             id,

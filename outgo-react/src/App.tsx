@@ -3,6 +3,7 @@ import './App.css'
 import Home from './Pages/Home'
 import Project from './Pages/Project'
 import Expense from './Pages/Expense'
+import Income from './Pages/Income'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />}>
           <Route path="/project" element={<Project />} />
           <Route path="/expense" element={<Expense />} />
+          <Route path="/income" element={<Income />} />
         </Route>
       </Routes>
     </>

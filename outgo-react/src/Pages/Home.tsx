@@ -14,6 +14,8 @@ import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
 import Dashboard from './Dashboard'
 import { useLocation, Outlet } from 'react-router-dom'
+import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
+import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
 // import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
@@ -96,9 +98,9 @@ export default function Home() {
         </FormModal>
       )}
       <div className="flex w-full mx-auto">
-        <div>
-          <div className="bg-teal-300 h-screen flex flex-col items-center ">
-            <div className="h-24">
+        <div className="border-r-2 border-gray-200 shadow-inner">
+          <div className="bg-teal-400 h-screen flex flex-col items-center ">
+            <div className="h-20 bg-teal-500 w-full">
               <h2 className="text-white font-semibold text-2xl flex items-center justify-center h-full">
                 Outgo
               </h2>
@@ -118,15 +120,19 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="min-h-screen flex-1 flex flex-col items-center p-4 relative">
+        <div className="min-h-screen flex-1 flex flex-col items-center relative">
+          <div className="border-b-2 border-gray-200 w-full h-20 flex items-center justify-between px-4 bg-teal-500 absolute top-0 left-0 right-0">
+            <ProjectDashboardName />
+            <UserLabelDashboard firstName={firstName} lastName={lastName} />
+          </div>
           {location.pathname == '/' ? (
             <Dashboard
               showAddProjectModal={showAddProjectModal}
               setShowModal={setShowModal}
               setExpenseForm={setExpenseForm}
               setIncomeForm={setIncomeForm}
-              firstName={firstName}
-              lastName={lastName}
+              // firstName={firstName}
+              // lastName={lastName}
             />
           ) : (
             <Outlet />

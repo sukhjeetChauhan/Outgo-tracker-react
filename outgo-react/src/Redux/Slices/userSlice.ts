@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import GetUserInfo from '../../authentication/ADB2Chelpers/getUserInfo' // Import your API function
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import GetUserInfo from '../../authentication/ADB2Chelpers/getUserInfo'
 import { AccountInfo, IPublicClientApplication } from '@azure/msal-browser'
 
 export const fetchUser = createAsyncThunk(
@@ -17,26 +17,36 @@ export const fetchUser = createAsyncThunk(
   }
 )
 
+interface UserState {
+  id: string | null
+  firstName: string
+  lastName: string
+  status: string
+  defaultProjectId: number | null
+  error: string | null
+}
+
+const initialState: UserState = {
+  id: null,
+  firstName: '',
+  lastName: '',
+  status: 'idle',
+  defaultProjectId: null,
+  error: null,
+}
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    id: null,
-    firstName: '',
-    lastName: '',
-    status: 'idle',
-    defaultProjectId: null,
-    error: null as string | null,
-  },
+  initialState,
   reducers: {
     logout: (state) => {
       state.id = null
       state.firstName = ''
       state.lastName = ''
-      state.defaultProjectId = null // Reset project ID on logout
+      state.defaultProjectId = null
     },
-
-    setDefaultProjectId: (state, action) => {
-      state.defaultProjectId = action.payload // Update project ID
+    setDefaultProjectId: (state, action: PayloadAction<number>) => {
+      state.defaultProjectId = action.payload
     },
   },
   extraReducers: (builder) => {
