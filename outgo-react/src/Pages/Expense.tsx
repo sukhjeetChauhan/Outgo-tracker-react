@@ -33,7 +33,7 @@ export default function Expense() {
               5 Year Expenses
             </button>
           </div>
-          <div className="flex-1 bg-white w-full">
+          <div className="flex-1 bg-white w-full rounded-b-lg shadow-md">
             <DataTable data={expense} />
           </div>
         </div>

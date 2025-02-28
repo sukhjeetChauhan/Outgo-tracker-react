@@ -1,8 +1,8 @@
 const menubarItems = [
-  { name: 'Dashboard', path: '/', icon: 'X' },
-  { name: 'Project', path: '/project', icon: 'X' },
-  { name: 'Expense', path: '/expense', icon: 'X' },
-  { name: 'Income', path: '/income', icon: 'X' },
+  { name: 'Dashboard', path: '/', icon: '/dashboard-logo.png' },
+  { name: 'Project', path: '/project', icon: '/project-logo.png' },
+  { name: 'Expense', path: '/expense', icon: '/expense-logo.png' },
+  { name: 'Income', path: '/income', icon: '/income-logo.png' },
 ]
 
 export default function Menubar({ retractMenu }: { retractMenu: boolean }) {
@@ -13,7 +13,7 @@ export default function Menubar({ retractMenu }: { retractMenu: boolean }) {
           <a href={item.path} key={index}>
             <div className="flex items-center py-2 px-8">
               <div className="px-4">
-                <span>{item.icon}</span>
+                <img src={item.icon} alt="dashboard" className="w-8 h-8" />
               </div>
               <div
                 className={`${

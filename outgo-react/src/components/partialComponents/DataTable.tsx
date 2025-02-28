@@ -7,7 +7,7 @@ interface DataTableProps {
   itemsPerPage?: number
 }
 
-const DataTable = ({ data, itemsPerPage = 10 }: DataTableProps) => {
+const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = Math.ceil(data.length / itemsPerPage)
 
@@ -18,10 +18,11 @@ const DataTable = ({ data, itemsPerPage = 10 }: DataTableProps) => {
 
   return (
     <div className="w-full">
+      <div className="w-full h-20 bg-teal-100"></div>
       {/* Render Items */}
       <ul className="">
         {currentItems.map((data, index) => (
-          <li key={index} className="py-4 border-b-2 border-gray-300">
+          <li key={index} className="py-[5px] border-b-2 border-gray-300">
             <div className="flex justify-between items-center px-4">
               <span className="flex-1 text-center text-lg border-r-2 border-gray-300 py-2">
                 {data.name}

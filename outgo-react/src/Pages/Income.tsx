@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import { useYearlyIncome } from '../apis/Income/useIncome'
+import DataTable from '../components/partialComponents/DataTable'
 
 export default function Income() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
@@ -11,8 +12,12 @@ export default function Income() {
   if (income) console.log(income)
 
   return (
-    <div>
-      <h1>Income</h1>
+    <div className="mt-20 p-4 w-full h-full ">
+      <div className="flex flex-col items-start justify-center rounded-lg w-full h-full overflow-hidden">
+        <div className="flex-1 bg-white w-full rounded-lg shadow-md">
+          <DataTable data={income} />
+        </div>
+      </div>
     </div>
   )
 }

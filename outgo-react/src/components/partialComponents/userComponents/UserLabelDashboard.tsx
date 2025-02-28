@@ -6,8 +6,8 @@ export default function UserLabelDashboard({
   lastName: string
 }) {
   return (
-    <div className="flex items-center px-4 py-2 rounded-full bg-gray-400">
-      <div className="text-base font-medium text-gray-900">
+    <div className="flex items-center px-4 py-2 rounded-full bg-white">
+      <div className="text-base font-medium text-teal-800">
         {firstName} {lastName}
       </div>
     </div>
