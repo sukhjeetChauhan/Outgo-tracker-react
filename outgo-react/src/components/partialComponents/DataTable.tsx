@@ -18,7 +18,7 @@ const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
 
   return (
     <div className="w-full">
-      <div className="w-full h-20 bg-teal-100"></div>
+      
       {/* Render Items */}
       <ul className="">
         {currentItems.map((data, index) => (
