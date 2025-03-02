@@ -5,31 +5,7 @@ import GetWeeklyExpenses from '../components/partialComponents/buttons/GetWeekly
 import GetMonthlyExpense from '../components/partialComponents/buttons/GetMonthlyExpense'
 import GetYearlyExpense from '../components/partialComponents/buttons/GetYearlyExpense'
 import GetFiveYearlyExpense from '../components/partialComponents/buttons/GetFiveYearlyExpense'
-import { DownOutlined } from '@ant-design/icons'
-import type { MenuProps } from 'antd'
-import { Button, Dropdown, Space } from 'antd'
-
-const items: MenuProps['items'] = [
-  {
-    label: 'Category',
-    key: '1',
-  },
-  {
-    label: 'Date',
-    key: '2',
-  },
-]
-
-const handleMenuClick: MenuProps['onClick'] = (e) => {
-  const selectedItem = items?.find((item) => item?.key === e.key)
-  if (selectedItem && 'label' in selectedItem) {
-    console.log('click', selectedItem.label)
-  }
-}
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-}
+import FilterSelection from '../components/partialComponents/Filter/FilterSelection'
 
 export type ExpenseTimeframe = 'weekly' | 'monthly' | 'yearly' | '5 years'
 
@@ -39,6 +15,7 @@ export default function Expense() {
     useState<ExpenseTimeframe>('weekly')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+  const [selectedFilter, setSelectedFilter] = useState<string>('')
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error fetching expenses</div>
@@ -80,15 +57,8 @@ export default function Expense() {
             />
           </div>
           <div className="flex-1 bg-white w-full rounded-b-lg shadow-md">
-            <div className="w-full h-20 flex justify-end items-center pr-12">
-              <Dropdown menu={menuProps} trigger={['click']}>
-                <Button className="!border-teal-300 hover:!border-teal-500 focus:!border-teal-500 !text-teal-300 hover:!text-teal-500 focus:!text-teal-500 !text-xl">
-                  <Space>
-                    Filter By
-                    <DownOutlined />
-                  </Space>
-                </Button>
-              </Dropdown>
+            <div className="w-full h-20 flex justify-end items-center pr-12 border-b-2 border-gray-300">
+              <FilterSelection setSelectedFilter={setSelectedFilter} />
             </div>
             <DataTable data={expense} />
           </div>

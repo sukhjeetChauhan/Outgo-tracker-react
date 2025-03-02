@@ -16,9 +16,14 @@ const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
   const endIndex = startIndex + itemsPerPage
   const currentItems = data.slice(startIndex, endIndex)
 
+  if (data.length === 0) {
+    return (
+      <div className="text-center text-xl text-teal-800">No data available</div>
+    )
+  }
+
   return (
     <div className="w-full">
-      
       {/* Render Items */}
       <ul className="">
         {currentItems.map((data, index) => (
