@@ -1,22 +1,68 @@
 import { useCallback } from 'react'
 import 'chartist/dist/index.css'
 import { BarChart } from 'chartist'
+import { useYearlyExpenses } from '../../../apis/Expenses/useExpenses'
+import { RootState } from '../../../Redux/store'
+import { useSelector } from 'react-redux'
 
 export default function CompareMonthlyExpenses() {
-  const chart = useCallback(() => {
-    new BarChart(
-      '#chart',
-      {
-        labels: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-        series: [20, 60, 120, 200, 180, 20, 10],
-      },
-      {
-        distributeSeries: true,
-      }
-    )
-  }, [])
+  const { defaultProjectId } = useSelector((state: RootState) => state.user)
+  const { data: yearlyExpenses, isLoading: expenseLoading } =
+    useYearlyExpenses(defaultProjectId)
 
-  return (
-    <div id="chart" ref={chart} style={{ height: '100%', width: '100%' }} />
-  )
+  const chart = useCallback(() => {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
+
+    interface Expense {
+      date: string
+      amount: number
+    }
+
+    interface ChartData {
+      labels: string[]
+      series: number[]
+    }
+
+    function sortData(expenses: Expense[]): ChartData {
+      const monthlyExpenses = months.reduce(
+        (acc: { [key: string]: number }, month) => {
+          acc[month] = 0
+          return acc
+        },
+        {}
+      )
+      for (let i = 0; i < expenses?.length; i++) {
+        const monthIndex = new Date(expenses[i].date).getMonth()
+
+        monthlyExpenses[months[monthIndex]] += expenses[i].amount
+      }
+
+      const data: ChartData = {
+        labels: Object.keys(monthlyExpenses),
+        series: Object.values(monthlyExpenses),
+      }
+
+      return data
+    }
+
+    new BarChart('#chart', sortData(yearlyExpenses), {
+      distributeSeries: true,
+    })
+  }, [yearlyExpenses])
+
+  if (expenseLoading) return <div>Loading...</div>
+  return <div id="chart" ref={chart} style={{ height: '98%', width: '100%' }} />
 }
