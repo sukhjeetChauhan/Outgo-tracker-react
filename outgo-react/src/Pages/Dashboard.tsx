@@ -3,6 +3,7 @@ import IncomeDashboardButton from '../components/partialComponents/buttons/Incom
 import BudgetVsExpense from '../components/partialComponents/Charts/BudgetVsExpense'
 import CategoryPieChart from '../components/partialComponents/Charts/CategoriesPieChart'
 import CompareMonthlyExpenses from '../components/partialComponents/Charts/CompareMonthlyExpenses'
+import OverallDetails from '../components/partialComponents/Charts/OverallDetails'
 
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
 // import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
@@ -53,10 +54,13 @@ DashboardProps) {
           </div>
         </div>
         <div className="flex gap-4 flex-1">
-          <div className="bg-white rounded p-2 flex-1">
+          <div className="bg-white rounded p-2 flex-1 flex flex-col items-center justify-center">
             <CategoryPieChart />
+            <h3 className="text-xs">Compare Categories expenditure</h3>
           </div>
-          <div className="bg-white rounded p-2 flex-1"></div>
+          <div className="bg-white rounded p-2 flex-1 flex flex-col items-center justify-center">
+            <OverallDetails />
+          </div>
         </div>
       </div>
     </div>

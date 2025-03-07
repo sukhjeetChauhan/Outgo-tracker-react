@@ -1,16 +1,64 @@
 import 'chartist/dist/index.css'
 import { PieChart, PieChartOptions, ResponsiveOptions } from 'chartist'
 import { useCallback } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../Redux/store'
+import { useMonthlyExpenses } from '../../../apis/Expenses/useExpenses'
+import { Expense } from '../../../apis/Expenses/ExpensesRepository'
 
 export default function CategoryPieChart() {
+  const { defaultProjectId } = useSelector((state: RootState) => state.user)
+  const { data: monthlyExpenses, isLoading: monthlyExpensesLoading } =
+    useMonthlyExpenses(defaultProjectId)
   const chart = useCallback(() => {
-    const data = {
-      labels: ['Bananas', 'Apples', 'Grapes'],
-      series: [20, 15, 40],
+    const categories: { [key: string]: string[] } = {
+      Essentials: ['Food', 'Groceries', 'Rent', 'Bills'],
+      Leisure: ['Entertainment', 'Shopping'],
+      Transportation: ['Car', 'Transport'],
+      Business: ['Business'],
+      Health: ['Health'],
+      Other: ['Other'],
     }
 
+    function sortCategoryData(expenses: Expense[]) {
+      const ExpensesSum = monthlyExpenses.reduce(
+        (a: number, c: Expense) => a + c.amount,
+        0
+      )
+
+      const categoryExpenses = Object.keys(categories).reduce(
+        (acc: { [key: string]: number }, category) => {
+          acc[category] = 0
+          return acc
+        },
+        {}
+      )
+      for (let i = 0; i < expenses?.length; i++) {
+        const category = expenses[i].category
+        for (const key in categories as { [key: string]: string[] }) {
+          if (categories[key].includes(category)) {
+            categoryExpenses[key] += expenses[i].amount
+          }
+        }
+      }
+
+      const data = {
+        labels: Object.keys(categoryExpenses),
+        series: Object.values(categoryExpenses).map((value) =>
+          Math.floor((value / ExpensesSum) * 100)
+        ),
+      }
+
+      return data
+    }
+
+    const data = sortCategoryData(monthlyExpenses)
+
+    console.log(data)
+
     const options: PieChartOptions = {
-      labelInterpolationFnc: (value) => String(value),
+      labelInterpolationFnc: (value: string) => value,
+      // labelPosition: 'inside',
     }
 
     const responsiveOptions: ResponsiveOptions<PieChartOptions> = [
@@ -33,9 +81,11 @@ export default function CategoryPieChart() {
     ]
 
     new PieChart('#piechart', data, options, responsiveOptions)
-  }, [])
+  }, [monthlyExpenses])
+
+  if (monthlyExpensesLoading) return <div>Loading...</div>
 
   return (
-    <div id="piechart" ref={chart} style={{ height: '100%', width: '100%' }} />
+    <div id="piechart" ref={chart} style={{ height: '90%', width: '100%' }} />
   )
 }
