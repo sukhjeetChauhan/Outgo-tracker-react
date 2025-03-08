@@ -29,32 +29,32 @@ const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
         {currentItems.map((data, index) => (
           <li key={index} className="py-[5px] border-b-2 border-gray-300">
             <div className="flex justify-between items-center px-4">
-              <span className="flex-1 text-center text-lg border-r-2 border-gray-300 py-2">
+              <span className="flex-1 text-center text-base lg:text-lg border-r-2 border-gray-300 py-2">
                 {data.name}
               </span>
-              <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+              <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                 {data.amount}
               </span>
-              <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+              <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                 {new Date(data.date).toLocaleDateString('en-GB')}
               </span>
               {'category' in data && (
-                <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                   {(data as Expense).category}
                 </span>
               )}
               {data.timeframe && (
-                <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                   {data.timeframe}
                 </span>
               )}
               {'expenseType' in data && (
-                <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                   {(data as Expense).expenseType}
                 </span>
               )}
               {'incomeType' in data && (
-                <span className="flex-1 text-center text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
                   {(data as Income).incomeType}
                 </span>
               )}

@@ -98,7 +98,7 @@ export default function Home() {
         </FormModal>
       )}
       <div className="flex w-full">
-        <div className="border-r-2 border-gray-200 shadow-inner">
+        <div className="border-r-2 border-gray-200 shadow-inner absolute sm:static -left-100 z-999">
           <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
               <h2 className="text-white font-semibold text-2xl flex items-center justify-center h-full">
@@ -108,7 +108,7 @@ export default function Home() {
             <div className="flex-1 border-t-2 border-gray-200 relative">
               <Menubar retractMenu={retractMenu} />
               <button
-                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center z-999"
+                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center z-999 hidden sm:block"
                 onClick={() => setRetractMenu(!retractMenu)}
               >
                 {retractMenu ? '>' : '<'}

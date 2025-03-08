@@ -29,7 +29,7 @@ export default function GetMonthlyExpense({
         currentTimeframe === 'monthly'
           ? 'bg-white text-teal-500'
           : 'bg-teal-500 text-white'
-      }  text-2xl px-4 py-2 rounded-t-lg shadow-md cursor-pointer`}
+      }  text-lg lg:text-2xl px-4 py-2 rounded-t-lg shadow-md cursor-pointer`}
       onClick={handleClick}
     >
       Monthly Expenses
