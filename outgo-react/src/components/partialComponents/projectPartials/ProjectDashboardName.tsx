@@ -7,9 +7,9 @@ export default function ProjectDashboardName() {
   const { data: project, isLoading, isError } = useProjectById(defaultProjectId)
   return (
     <div>
-      <h3 className="text-2xl font-semibold">
+      <h3 className="text-2xl font-semibold text-white">
         Project Name:{' '}
-        <span>
+        <span className="font-normal text-white">
           {isLoading
             ? 'Loading...'
             : isError

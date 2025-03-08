@@ -7,7 +7,7 @@ import Income from './Pages/Income'
 
 function App() {
   return (
-    <>
+    <div className="">
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="/project" element={<Project />} />
@@ -15,7 +15,7 @@ function App() {
           <Route path="/income" element={<Income />} />
         </Route>
       </Routes>
-    </>
+    </div>
   )
 }
 

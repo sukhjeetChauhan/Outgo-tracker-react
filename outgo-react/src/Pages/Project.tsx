@@ -18,7 +18,7 @@ export default function Project() {
   if (project) console.log(project)
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-4 w-full p-4">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-5px)] gap-4 w-full p-4 overflow-y-auto">
       {showModal && (
         <FormModal>
           {ProjectForm && (

@@ -50,7 +50,7 @@ export default function Expense() {
   if (error) return <div>Error fetching expenses</div>
 
   return (
-    <div className="mt-20 p-4 w-full h-full ">
+    <div className="mt-20 p-4 w-full h-full">
       <div className="flex flex-col items-start justify-center rounded w-full h-full">
         <div className="flex gap-4">
           <GetWeeklyExpenses

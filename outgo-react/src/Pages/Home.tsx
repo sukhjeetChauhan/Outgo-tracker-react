@@ -97,7 +97,7 @@ export default function Home() {
           )}
         </FormModal>
       )}
-      <div className="flex w-full mx-auto">
+      <div className="flex w-full">
         <div className="border-r-2 border-gray-200 shadow-inner">
           <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
