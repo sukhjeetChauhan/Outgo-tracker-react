@@ -44,17 +44,17 @@ const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
                 </span>
               )}
               {data.timeframe && (
-                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2 hidden sm:block">
                   {data.timeframe}
                 </span>
               )}
               {'expenseType' in data && (
-                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2 hidden sm:block">
                   {(data as Expense).expenseType}
                 </span>
               )}
               {'incomeType' in data && (
-                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2">
+                <span className="flex-1 text-center text-base lg:text-lg border-l-2 border-r-2 border-gray-300 py-2 hidden sm:block">
                   {(data as Income).incomeType}
                 </span>
               )}

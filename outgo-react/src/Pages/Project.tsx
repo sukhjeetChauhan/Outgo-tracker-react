@@ -40,7 +40,7 @@ export default function Project() {
           <p className="text-lg text-teal-900">{`Current Savings: Rs ${project.savings}`}</p>
         </div>
       </div>
-      <div className="flex w-full flex-1 gap-4">
+      <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">
         <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4">
           <h2 className="text-teal-800 font-semibold text-2xl">
             Created Projects
@@ -51,7 +51,7 @@ export default function Project() {
             setShowModal={setShowModal}
           />
         </div>
-        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4">
+        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 min-h-36">
           <h2 className="text-teal-800 font-semibold text-2xl">
             Joined Projects
           </h2>

@@ -29,6 +29,7 @@ export default function Home() {
   const [IncomeForm, setIncomeForm] = useState(false)
   const [ExpenseForm, setExpenseForm] = useState(false)
   const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
 
   const location = useLocation()
 
@@ -98,7 +99,11 @@ export default function Home() {
         </FormModal>
       )}
       <div className="flex w-full">
-        <div className="border-r-2 border-gray-200 shadow-inner absolute sm:static -left-100 z-999">
+        <div
+          className={`border-r-2 border-gray-200 shadow-inner absolute sm:static ${
+            showMenu ? 'left-0' : '-left-100'
+          } z-999 transition-all duration-300 ease-in-out`}
+        >
           <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
               <h2 className="text-white font-semibold text-2xl flex items-center justify-center h-full">
@@ -123,6 +128,12 @@ export default function Home() {
         <div className="min-h-screen flex-1 flex flex-col items-center relative">
           <div className="border-b-2 border-gray-200 w-full h-20 flex items-center justify-between px-4 bg-teal-500 absolute top-0 left-0 right-0">
             <ProjectDashboardName />
+            <img
+              src="/menu.png"
+              alt="Hamburger menu"
+              className="w-16 h-16 sm:hidden z-999"
+              onClick={() => setShowMenu(!showMenu)}
+            />
             <UserLabelDashboard firstName={firstName} lastName={lastName} />
           </div>
           {location.pathname == '/' ? (
