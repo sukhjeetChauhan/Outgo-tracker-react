@@ -1,6 +1,6 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch, useSelector } from 'react-redux'
-import LoginButton from '../components/partialComponents/userComponents/LoginButton'
+// import LoginButton from '../components/partialComponents/userComponents/LoginButton'
 // import PasswordReset from '../components/userComponents/PasswordReset'
 import { fetchUser } from '../Redux/Slices/userSlice'
 import { RootState, AppDispatch } from '../Redux/store'
@@ -120,7 +120,7 @@ export default function Home() {
               </button>
             </div>
             <div className="border-t-2 border-gray-200 flex flex-col gap-4 items-center p-4 my-4 w-full">
-              <LoginButton />
+              {/* <LoginButton /> */}
               <LogoutButton />
             </div>
           </div>

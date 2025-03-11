@@ -79,7 +79,7 @@ export default function BudgetVsExpense() {
   }, [monthlyExpenses, project?.budget])
   if (projectLoading) return <div>Loading...</div>
   if (monthlyExpensesLoading) return <div>Loading...</div>
-  if (project.budgetTimeframe !== 'Monthly') return <div>No Data</div>
+  if (project?.budgetTimeframe !== 'Monthly') return <div>No Data</div>
   return (
     <div id="linechart" ref={chart} style={{ height: '98%', width: '100%' }} />
   )

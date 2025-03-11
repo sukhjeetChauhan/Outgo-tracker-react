@@ -21,7 +21,7 @@ export default function CategoryPieChart() {
     }
 
     function sortCategoryData(expenses: Expense[]) {
-      const ExpensesSum = monthlyExpenses.reduce(
+      const ExpensesSum = monthlyExpenses?.reduce(
         (a: number, c: Expense) => a + c.amount,
         0
       )

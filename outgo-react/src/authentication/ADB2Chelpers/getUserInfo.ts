@@ -20,7 +20,7 @@ const GetUserInfo = async (
 
     if (!account) {
       console.warn('No active accounts found. Redirecting to login.')
-      await instance.loginPopup({ scopes: ['openid', 'profile'] }) // 🚀 Interactive login as a fallback
+      await instance.loginRedirect({ scopes: ['openid', 'profile'] }) // 🚀 Interactive login as a fallback
       return null
     }
 

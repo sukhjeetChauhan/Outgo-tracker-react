@@ -50,7 +50,7 @@ export default function OverallDetails() {
           Total Savings :
         </p>
         <p className="lg:text-xl md: text-lg">
-          {projectLoading ? 'Loading' : project.savings}
+          {projectLoading ? 'Loading' : project?.savings}
         </p>
       </div>
     </div>

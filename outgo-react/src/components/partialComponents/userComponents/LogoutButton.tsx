@@ -1,14 +1,19 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../Redux/Slices/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function LogoutButton() {
   const { instance } = useMsal()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const handleLogout = () => {
-    instance.logoutPopup()
+  const handleLogout = async () => {
+    await instance.logoutRedirect({
+      postLogoutRedirectUri: window.location.origin + '/login',
+    })
     dispatch(logout())
+    navigate('/login') // Ensure redirection after logout
   }
 
   return (
