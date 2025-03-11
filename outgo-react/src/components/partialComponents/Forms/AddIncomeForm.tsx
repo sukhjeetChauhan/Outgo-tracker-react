@@ -16,6 +16,10 @@ import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateIncome } from '../../../apis/Income/useIncome'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
+import {
+  useProjectById,
+  useUpdateProject,
+} from '../../../apis/Project/useProjects'
 
 interface Income {
   name: string
@@ -62,6 +66,8 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
     id: state.user.id,
     defaultProjectId: state.user.defaultProjectId,
   }))
+  const { data: project } = useProjectById(defaultProjectId)
+  const { mutate: updateProject } = useUpdateProject()
 
   const {
     handleSubmit,
@@ -88,8 +94,14 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         projectId: defaultProjectId,
       }
 
+      const updatedProject = {
+        ...project,
+        savings: project.savings + data.amount,
+      }
+
       try {
         await createIncome(postData)
+        await updateProject({ id: defaultProjectId, project: updatedProject })
         message.success('Income added successfully')
         reset()
         setShowModal(false)

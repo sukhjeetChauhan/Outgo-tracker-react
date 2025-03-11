@@ -16,6 +16,10 @@ import CloseModalButton from '../buttons/CloseModalButton'
 import { useCreateExpense } from '../../../apis/Expenses/useExpenses'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
+import {
+  useProjectById,
+  useUpdateProject,
+} from '../../../apis/Project/useProjects'
 
 interface AddExpenseFormProps {
   setShowModal: (value: boolean) => void
@@ -73,6 +77,9 @@ const AddExpenseForm = ({
     defaultProjectId: state.user.defaultProjectId,
   }))
 
+  const { data: project } = useProjectById(defaultProjectId)
+  const { mutate: updateProject } = useUpdateProject()
+
   const {
     handleSubmit,
     control,
@@ -99,8 +106,14 @@ const AddExpenseForm = ({
         projectId: defaultProjectId,
       }
 
+      const updatedProject = {
+        ...project,
+        savings: project.savings - data.amount,
+      }
+
       try {
         await createExpense(postData)
+        await updateProject({ id: defaultProjectId, project: updatedProject })
         message.success('Expense added successfully')
         reset()
         setShowModal(false)
