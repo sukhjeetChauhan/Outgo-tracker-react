@@ -6,12 +6,12 @@ const msalConfig = {
     authority:
       'https://Outgoorg.b2clogin.com/Outgoorg.onmicrosoft.com/B2C_1_SignUpSignIn', // Replace with your SignUpSignIn flow
 
-    redirectUri: 'http://localhost:5173', // Change this based on your environment
+    redirectUri: 'http://localhost:5173/', // Change this based on your environment
     knownAuthorities: ['Outgoorg.b2clogin.com'],
   },
   cache: {
-    cacheLocation: 'sessionStorage',
-    storeAuthStateInCookie: false, // Set to `true` if you face issues in IE11
+    cacheLocation: 'localStorage',
+    storeAuthStateInCookie: true, // Set to `true` if you face issues in IE11
   },
   system: {
     loggerOptions: {
