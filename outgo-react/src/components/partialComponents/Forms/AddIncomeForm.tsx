@@ -17,7 +17,6 @@ import { useCreateIncome } from '../../../apis/Income/useIncome'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
 
-
 interface Income {
   name: string
   description?: string
@@ -103,7 +102,7 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
   }
 
   return (
-    <div className="rounded-lg bg-white px-4 py-8 shadow-md w-1/3 relative">
+    <div className="rounded-lg bg-white px-4 py-8 shadow-md w-4/5 sm:w-1/3 relative">
       <h2 className="text-teal-500 text-xl font-bold mb-6">Income Details</h2>
       <Form layout="horizontal" onFinish={handleSubmit(onSubmit)}>
         <Form.Item

@@ -115,7 +115,7 @@ const AddProjectForm = ({
   }
 
   return (
-    <div className="rounded-lg bg-white px-4 py-8 shadow-md w-1/3 relative">
+    <div className="rounded-lg bg-white px-4 py-8 shadow-md w-4/5 sm:w-1/3 relative">
       <h2 className="text-teal-500 text-xl font-bold mb-6">Project Details</h2>
       <Form layout="horizontal" onFinish={handleSubmit(onSubmit)}>
         <Form.Item
