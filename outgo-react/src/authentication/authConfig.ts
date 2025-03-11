@@ -30,3 +30,7 @@ export const passwordResetAuthority =
 
 // Create MSAL instance
 export const msalInstance = new PublicClientApplication(msalConfig)
+
+export const initializeMsal = async () => {
+  await msalInstance.initialize() // Ensure MSAL is initialized before use
+}

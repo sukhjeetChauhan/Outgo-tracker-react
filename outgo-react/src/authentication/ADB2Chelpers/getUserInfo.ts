@@ -46,7 +46,7 @@ const GetUserInfo = async (
       // Handle session expiration by triggering login again
       if (error instanceof InteractionRequiredAuthError) {
         console.warn('Session expired. Re-authenticating...')
-        await instance.loginPopup({ scopes: ['openid', 'profile'] }) // 🚀 Prompt login
+        await instance.loginRedirect({ scopes: ['openid', 'profile'] }) // 🚀 Prompt login
         return null
       }
       throw error
