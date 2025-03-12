@@ -48,7 +48,7 @@ export default function GetWeeklyExpenses({
         currentTimeframe === 'weekly'
           ? 'bg-white text-teal-500'
           : 'bg-teal-500 text-white'
-      }  text-lg lg:text-2xl px-4 py-2 rounded-t-lg shadow-md cursor-pointer`}
+      }  text-sm lg:text-2xl px-4 py-2 sm:rounded-t-lg shadow-md cursor-pointer`}
       onClick={handleClick}
     >
       Weekly Expenses

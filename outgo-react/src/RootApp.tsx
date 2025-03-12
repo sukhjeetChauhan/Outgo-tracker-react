@@ -14,7 +14,13 @@ const RootApp = () => {
   }, [])
 
   if (!isMsalReady) {
-    return <div>Loading authentication...</div>
+    return (
+      <div className="flex items-center justify-center h-screen w-screen">
+        <p className="text-2xl text-teal-500 font-semibold">
+          Loading ...
+        </p>
+      </div>
+    )
   }
 
   return (

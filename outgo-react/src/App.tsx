@@ -12,7 +12,13 @@ const Login = lazy(() => import('./Pages/Login'))
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen w-screen">
+          <p className="text-2xl text-teal-500 font-semibold">Loading ...</p>
+        </div>
+      }
+    >
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="/project" element={<Project />} />

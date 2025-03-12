@@ -15,9 +15,24 @@ const Login = () => {
   }, [accounts, navigate])
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <LoginButton />
+    <div className="flex flex-col sm:flex-row h-screen w-screen items-center justify-center">
+      <div className="h-3/5 sm:h-full w-full sm:w-3/5 bg-teal-400 flex flex-col items-center justify-center gap-20">
+        <h2 className=" text-3xl sm:text-5xl font-bold text-white">
+          Welcome to Outgo Tracker
+        </h2>
+        <img
+          className="w-5/6 sm:w-4/6 h-96 rounded-lg overflow-hidden"
+          src="/LoginPagePic.jpg"
+          alt="illustration depicting managing expenses"
+        />
+      </div>
+
+      <div className="flex flex-col items-center justify-center  h-2/5 sm:h-screen w-full sm:w-2/5 gap-8">
+        <h2 className="text-2xl sm:text-3xl font-bold  text-teal-500 mb-4">
+          Lets get your Expenses sorted!
+        </h2>
+        <LoginButton />
+      </div>
     </div>
   )
 }

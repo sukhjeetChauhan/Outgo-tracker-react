@@ -52,7 +52,7 @@ export default function Expense() {
   return (
     <div className="mt-20 p-4 w-full h-full">
       <div className="flex flex-col items-start justify-center rounded w-full h-full">
-        <div className="flex gap-4">
+        <div className="flex sm:gap-4">
           <GetWeeklyExpenses
             setLoading={setLoading}
             setError={setError}
