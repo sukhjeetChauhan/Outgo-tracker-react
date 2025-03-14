@@ -13,16 +13,17 @@ export default function BudgetVsExpense() {
   const { data: monthlyExpenses, isLoading: monthlyExpensesLoading } =
     useMonthlyExpenses(defaultProjectId)
 
-  function getLastDayOfMonth(dateString: string) {
-    const date = new Date(dateString)
+  function getLastDayOfMonth(dateString: string | undefined) {
+    if (dateString) {
+      const date = new Date(dateString)
 
-    // Move to the first day of the next month
-    date.setMonth(date.getMonth() + 1)
-    date.setDate(0) // Move back to the last day of the previous month
+      // Move to the first day of the next month
+      date.setMonth(date.getMonth() + 1)
+      date.setDate(0) // Move back to the last day of the previous month
 
-    return date.toISOString() // Returns in ISO format
+      return date.toISOString() // Returns in ISO format}
+    }
   }
-
   interface Expense {
     date: string
     amount: number
@@ -46,11 +47,11 @@ export default function BudgetVsExpense() {
             name: 'Budget',
             data: [
               {
-                x: new Date(monthlyExpenses[0].date),
+                x: new Date(monthlyExpenses[0]?.date),
                 y: project?.budget,
               },
               {
-                x: new Date(getLastDayOfMonth(monthlyExpenses[0].date)),
+                x: new Date(getLastDayOfMonth(monthlyExpenses[0]?.date) || ''),
                 y: project?.budget,
               },
             ],
