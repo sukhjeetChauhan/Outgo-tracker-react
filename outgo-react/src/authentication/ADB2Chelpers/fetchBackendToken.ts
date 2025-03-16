@@ -1,6 +1,7 @@
 import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
 
 // const apiUrl = 'http://localhost:5298/api'
+const scope = import.meta.env.VITE_SCOPE_URL
 
 export interface ReturnType {
   token: string
@@ -21,9 +22,7 @@ const fetchBackendToken = async (
 ): Promise<ReturnType | string> => {
   try {
     const response = await instance.acquireTokenSilent({
-      scopes: [
-        'https://Outgoorg.onmicrosoft.com/b59a8e85-5b1a-4530-8c77-ada60c7f62ce/user.read',
-      ],
+      scopes: [`${scope}`],
       account: accounts[0],
     })
 

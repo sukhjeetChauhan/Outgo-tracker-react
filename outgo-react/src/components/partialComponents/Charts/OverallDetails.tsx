@@ -15,17 +15,29 @@ export default function OverallDetails() {
   const { data: yearlyIncome, isLoading: incomeLoading } =
     useYearlyIncome(defaultProjectId)
 
+  console.log(monthlyExpenses)
+
   const sortData = useMemo(() => {
-    const totalMonthlyExpense = monthlyExpenses?.reduce(
-      (a: number, c: Expense) => a + c.amount,
-      0
-    )
-    const totalIncome = yearlyIncome?.reduce(
-      (a: number, c: Expense) => a + c.amount,
-      0
-    )
+    let totalMonthlyExpense
+    let totalIncome
+    if (monthlyExpenses?.length > 0) {
+      totalMonthlyExpense = monthlyExpenses?.reduce(
+        (a: number, c: Expense) => a + c.amount,
+        0
+      )
+    }
+
+    if (yearlyIncome?.length > 0) {
+      totalIncome = yearlyIncome?.reduce(
+        (a: number, c: Expense) => a + c.amount,
+        0
+      )
+    }
     return { expense: totalMonthlyExpense, income: totalIncome }
   }, [monthlyExpenses, yearlyIncome])
+
+  if (monthlyExpensesLoading) return <div>Loading...</div>
+  if (incomeLoading) return <div>Loading...</div>
 
   return (
     <div className="flex flex-col gap-4 w-3/4">

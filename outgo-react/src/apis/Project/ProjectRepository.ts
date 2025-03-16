@@ -2,8 +2,7 @@ import axios from 'axios'
 import { Timeframe } from '../../Types/enums'
 import fetchBackendToken from '../../authentication/ADB2Chelpers/fetchBackendToken'
 import { IPublicClientApplication, AccountInfo } from '@azure/msal-browser'
-
-const backendApiUrl = 'http://localhost:5298/api'
+import { backendApiUrl } from '../Expenses/ExpensesRepository'
 
 export interface Project {
   name: string

@@ -1,7 +1,5 @@
 import axios from 'axios'
-
-const backendApiUrl = 'http://localhost:5298/api'
-
+import { backendApiUrl } from '../Expenses/ExpensesRepository'
 export interface User {
   id: string
   firstName: string

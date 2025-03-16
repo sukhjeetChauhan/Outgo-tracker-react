@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Category, Timeframe, TransactionType } from '../../Types/enums'
 
-const backendApiUrl = 'http://localhost:5298/api'
+const backendUrl = import.meta.env.VITE_BASE_BACKEND_URL
+
+export const backendApiUrl = `${backendUrl}/api`
 
 export interface Expense {
   name: string

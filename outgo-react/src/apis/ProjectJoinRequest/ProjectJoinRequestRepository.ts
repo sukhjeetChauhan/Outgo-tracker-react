@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Status } from '../../Types/enums'
-
-const backendApiUrl = 'http://localhost:5298/api'
+import { backendApiUrl } from '../Expenses/ExpensesRepository'
 
 export interface ProjectJoinRequest {
   projectId: number

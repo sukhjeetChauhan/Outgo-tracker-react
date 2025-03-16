@@ -1,13 +1,17 @@
 import { PublicClientApplication, LogLevel } from '@azure/msal-browser'
 
+export const baseUrl = import.meta.env.VITE_BASE_FRONTEND_URL
+const clientID = import.meta.env.VITE_AD_B2C_CLIENTID
+const authority = import.meta.env.VITE_AD_B2C_AUTHORITY
+const knownAuthorities = import.meta.env.VITE_AD_B2C_KnownAuthority
+const passwordResetAuth = import.meta.env.VITE_AD_B2C_PasswordResetAuthority
+
 const msalConfig = {
   auth: {
-    clientId: 'e1e219ab-2f9f-4349-bdf9-7fc6600e177f', // Found in Azure AD B2C > App Registrations
-    authority:
-      'https://Outgoorg.b2clogin.com/Outgoorg.onmicrosoft.com/B2C_1_SignUpSignIn', // Replace with your SignUpSignIn flow
-
-    redirectUri: 'http://localhost:5173/', // Change this based on your environment
-    knownAuthorities: ['Outgoorg.b2clogin.com'],
+    clientId: `${clientID}`, // Found in Azure AD B2C > App Registrations
+    authority: `${authority}`, // Replace with your SignUpSignIn flow
+    redirectUri: `${baseUrl}/`, // Change this based on your environment
+    knownAuthorities: [`${knownAuthorities}`],
   },
   cache: {
     cacheLocation: 'localStorage',
@@ -25,8 +29,7 @@ const msalConfig = {
 }
 
 // 🔹 Define a separate authority for password reset
-export const passwordResetAuthority =
-  'https://Outgoorg.b2clogin.com/Outgoorg.onmicrosoft.com/B2C_1_passReset'
+export const passwordResetAuthority = `${passwordResetAuth}`
 
 // Create MSAL instance
 export const msalInstance = new PublicClientApplication(msalConfig)
