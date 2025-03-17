@@ -11,7 +11,9 @@ export interface User {
 
 export class UsersRepository {
   static async getById(id: string) {
-    const { data } = await axios.get(`${backendApiUrl}/User/${id}`)
+    const { data } = await axios.get(`${backendApiUrl}/User/${id}`, {
+      withCredentials: true,
+    })
     return data
   }
 

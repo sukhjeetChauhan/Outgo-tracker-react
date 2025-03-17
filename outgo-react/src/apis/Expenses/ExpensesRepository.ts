@@ -21,7 +21,8 @@ export class ExpensesRepository {
   // Get expense by ProjectId for one year
   static async getYealyExpenses(projectId: number | null) {
     const { data } = await axios.get(
-      `${backendApiUrl}/Expenses/Project/${projectId}/Year`
+      `${backendApiUrl}/Expenses/Project/${projectId}/Year`,
+      { withCredentials: true }
     )
     return data
   }
@@ -29,7 +30,8 @@ export class ExpensesRepository {
   // Get expense by ProjectId for one month
   static async getMonthlyExpenses(projectId: number | null) {
     const { data } = await axios.get(
-      `${backendApiUrl}/Expenses/Project/${projectId}/Month`
+      `${backendApiUrl}/Expenses/Project/${projectId}/Month`,
+      { withCredentials: true }
     )
     return data
   }
@@ -37,7 +39,8 @@ export class ExpensesRepository {
   // Get expense by ProjectId for one week
   static async getWeeklyExpenses(projectId: number | null) {
     const { data } = await axios.get(
-      `${backendApiUrl}/Expenses/Project/${projectId}/Week`
+      `${backendApiUrl}/Expenses/Project/${projectId}/Week`,
+      { withCredentials: true }
     )
     return data
   }
@@ -45,14 +48,17 @@ export class ExpensesRepository {
   // Get expense by ProjectId for past 5 years
   static async getFiveYearExpenses(projectId: number | null) {
     const { data } = await axios.get(
-      `${backendApiUrl}/Expenses/Project/${projectId}/Past5Years`
+      `${backendApiUrl}/Expenses/Project/${projectId}/Past5Years`,
+      { withCredentials: true }
     )
     return data
   }
 
   // Post new expense
   static async create(expense: Expense) {
-    const { data } = await axios.post(`${backendApiUrl}/Expenses`, expense)
+    const { data } = await axios.post(`${backendApiUrl}/Expenses`, expense, {
+      withCredentials: true,
+    })
     return data
   }
 
