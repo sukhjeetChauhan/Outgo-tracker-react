@@ -11,6 +11,8 @@ export interface GetExpensesButtonProps {
   currentTimeframe: ExpenseTimeframe
   setCurrentTimeframe: (value: ExpenseTimeframe) => void
   setExpense: (value: Expense[]) => void
+}
+interface WeeklyExpenseProps extends GetExpensesButtonProps {
   filteredExpenses: Expense[]
 }
 
@@ -21,7 +23,7 @@ export default function GetWeeklyExpenses({
   setCurrentTimeframe,
   setExpense,
   filteredExpenses,
-}: GetExpensesButtonProps) {
+}: WeeklyExpenseProps) {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
   const {
     data: expense,

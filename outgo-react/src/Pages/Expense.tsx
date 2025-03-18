@@ -60,7 +60,7 @@ export default function Expense() {
             currentTimeframe={currentTimeframe}
             setCurrentTimeframe={setCurrentTimeframe}
             setExpense={updateExpenses} // Pass updateExpenses function
-            filteredExpenses={filterExpenses}
+            filteredExpenses={filteredExpenses}
           />
           <GetMonthlyExpense
             setLoading={setLoading}
