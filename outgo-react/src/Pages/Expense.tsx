@@ -42,6 +42,7 @@ export default function Expense() {
   }
 
   const updateExpenses = (newExpenses: ExpenseType[]) => {
+    console.log('Updating Expenses')
     setAllExpenses(newExpenses) // Keep original data
     setFilteredExpenses(newExpenses) // Sync filtered data initially
   }
