@@ -16,12 +16,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col sm:flex-row h-screen w-screen items-center justify-center">
-      <div className="h-3/5 sm:h-full w-full sm:w-3/5 bg-teal-400 flex flex-col items-center justify-center gap-20">
+      <div className="h-3/5 sm:h-full w-full sm:w-3/5 bg-teal-400 flex flex-col items-center justify-center gap-12 sm:gap-20">
         <h2 className=" text-3xl sm:text-5xl font-bold text-white">
           Welcome to Outgo Tracker
         </h2>
         <img
-          className="w-5/6 sm:w-4/6 h-96 rounded-lg overflow-hidden"
+          className="w-7/8 sm:w-4/6 h-96 rounded-lg overflow-hidden"
           src="/LoginPagePic.jpg"
           alt="illustration depicting managing expenses"
         />
