@@ -83,34 +83,42 @@ export default function Expense() {
           />
         </div>
         <div className="flex-1 bg-white w-full rounded-b-lg shadow-md">
-          <div className="w-full h-20 flex justify-end items-center pr-12 border-b-2 border-gray-300 gap-4">
-            {selectedFilter === 'Category' && (
-              <CategorySelection
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-              />
-            )}
-            {selectedFilter === 'Date' && (
-              <DateFilter setSelectedDate={setSelectedDate} />
-            )}
-            <FilterSelection setSelectedFilter={setSelectedFilter} />
-            <button
-              className="bg-teal-300 px-4 py-2 rounded text-white cursor-pointer"
-              onClick={filterExpenses}
-            >
-              Apply
-            </button>
-            <button
-              className="rounded-full border-2 border-teal-300 text-teal-300 font-semibold px-2 py-1"
-              onClick={() => {
-                setFilteredExpenses(allExpenses)
-                setSelectedCategory('')
-                setSelectedDate('')
-                setSelectedFilter('')
-              }}
-            >
-              X
-            </button>
+          <div
+            className={`w-full ${
+              selectedFilter !== '' ? 'h-32' : 'h-20'
+            } sm:h-20 flex flex-col sm:flex-row justify-end items-center pr-12 border-b-2 border-gray-300 gap-4`}
+          >
+            <div>
+              {selectedFilter === 'Category' && (
+                <CategorySelection
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                />
+              )}
+              {selectedFilter === 'Date' && (
+                <DateFilter setSelectedDate={setSelectedDate} />
+              )}
+            </div>
+            <div className="flex gap-4 items-center">
+              <FilterSelection setSelectedFilter={setSelectedFilter} />
+              <button
+                className="bg-teal-300 px-4 py-2 rounded text-white cursor-pointer"
+                onClick={filterExpenses}
+              >
+                Apply
+              </button>
+              <button
+                className="rounded-full border-2 border-teal-300 text-teal-300 font-semibold px-2 py-1"
+                onClick={() => {
+                  setFilteredExpenses(allExpenses)
+                  setSelectedCategory('')
+                  setSelectedDate('')
+                  setSelectedFilter('')
+                }}
+              >
+                X
+              </button>
+            </div>
           </div>
           <DataTable data={filteredExpenses} />
         </div>
