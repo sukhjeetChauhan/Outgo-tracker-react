@@ -35,10 +35,18 @@ export default function Project() {
           Current Project Details
         </h2>
         <div className="flex-1 flex flex-col justify-around items-start">
-          <p className="text-lg text-teal-900">{`Name: ${project?.name}`}</p>
-          <p className="text-lg text-teal-900">{`Description: ${project?.description}`}</p>
-          <p className="text-lg text-teal-900">{`Budget: Rs ${project?.budget}`}</p>
-          <p className="text-lg text-teal-900">{`Current Savings: Rs ${project?.savings}`}</p>
+          <p className="text-lg text-teal-900">{`Name: ${
+            project ? project.name : ''
+          }`}</p>
+          <p className="text-lg text-teal-900">{`Description: ${
+            project ? project.description : ''
+          }`}</p>
+          <p className="text-lg text-teal-900">{`Budget: Rs ${
+            project ? project.budget : ''
+          }`}</p>
+          <p className="text-lg text-teal-900">{`Current Savings: Rs ${
+            project ? project.savings : ''
+          }`}</p>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">

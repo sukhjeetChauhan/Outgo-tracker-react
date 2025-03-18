@@ -8,6 +8,7 @@ export default function ProjectsList() {
   const { data: projects, error, isLoading } = useGetProjectsByUserId(id)
 
   if (isLoading) return <div>Loading...</div>
+
   if (error) return <div>Error fetching projects</div>
   if (projects) {
     const reversedProjects = [...projects].reverse()
