@@ -13,9 +13,10 @@ export default function Project() {
   const [showModal, setShowModal] = useState(false)
   const [ProjectForm, setProjectForm] = useState(false)
 
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error fetching project</div>
-  if (project) console.log(project)
+  if (defaultProjectId) {
+    if (isLoading) return <div>Loading...</div>
+    if (isError) return <div>Error fetching project</div>
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-5px)] gap-4 w-full p-4 overflow-y-auto">
@@ -34,10 +35,10 @@ export default function Project() {
           Current Project Details
         </h2>
         <div className="flex-1 flex flex-col justify-around items-start">
-          <p className="text-lg text-teal-900">{`Name: ${project.name}`}</p>
-          <p className="text-lg text-teal-900">{`Description: ${project.description}`}</p>
-          <p className="text-lg text-teal-900">{`Budget: Rs ${project.budget}`}</p>
-          <p className="text-lg text-teal-900">{`Current Savings: Rs ${project.savings}`}</p>
+          <p className="text-lg text-teal-900">{`Name: ${project?.name}`}</p>
+          <p className="text-lg text-teal-900">{`Description: ${project?.description}`}</p>
+          <p className="text-lg text-teal-900">{`Budget: Rs ${project?.budget}`}</p>
+          <p className="text-lg text-teal-900">{`Current Savings: Rs ${project?.savings}`}</p>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">
