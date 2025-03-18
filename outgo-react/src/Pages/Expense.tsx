@@ -48,6 +48,7 @@ export default function Expense() {
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error fetching expenses</div>
+  console.log('Filtered Expenses:', filteredExpenses)
 
   return (
     <div className="mt-20 p-4 w-full h-full">
