@@ -11,6 +11,7 @@ export interface GetExpensesButtonProps {
   currentTimeframe: ExpenseTimeframe
   setCurrentTimeframe: (value: ExpenseTimeframe) => void
   setExpense: (value: Expense[]) => void
+  filteredExpenses: Expense[]
 }
 
 export default function GetWeeklyExpenses({
@@ -19,6 +20,7 @@ export default function GetWeeklyExpenses({
   currentTimeframe,
   setCurrentTimeframe,
   setExpense,
+  filteredExpenses,
 }: GetExpensesButtonProps) {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
   const {
@@ -28,12 +30,14 @@ export default function GetWeeklyExpenses({
   } = useWeeklyExpenses(defaultProjectId)
 
   useEffect(() => {
-    if (currentTimeframe === 'weekly') {
-      if (expense) {
-        setExpense(expense)
-      }
+    if (
+      currentTimeframe === 'weekly' &&
+      expense &&
+      filteredExpenses.length === 0
+    ) {
+      setExpense(expense)
     }
-  }, [currentTimeframe, expense, setExpense])
+  }, [currentTimeframe, expense, filteredExpenses.length, setExpense])
 
   const handleClick = () => {
     setLoading(isLoading)

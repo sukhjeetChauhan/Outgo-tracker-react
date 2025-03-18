@@ -42,7 +42,6 @@ export default function Expense() {
   }
 
   const updateExpenses = (newExpenses: ExpenseType[]) => {
-    console.log('Updating Expenses', newExpenses)
     setAllExpenses(newExpenses) // Keep original data
     setFilteredExpenses(newExpenses) // Sync filtered data initially
   }
@@ -61,6 +60,7 @@ export default function Expense() {
             currentTimeframe={currentTimeframe}
             setCurrentTimeframe={setCurrentTimeframe}
             setExpense={updateExpenses} // Pass updateExpenses function
+            filteredExpenses={filterExpenses}
           />
           <GetMonthlyExpense
             setLoading={setLoading}
