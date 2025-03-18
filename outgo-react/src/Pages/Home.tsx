@@ -102,7 +102,7 @@ export default function Home() {
         <div
           className={`border-r-2 border-gray-200 shadow-inner absolute sm:static ${
             showMenu ? 'left-0' : '-left-100'
-          } z-999 transition-all duration-300 ease-in-out`}
+          } z-900 transition-all duration-300 ease-in-out`}
         >
           <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
@@ -113,7 +113,7 @@ export default function Home() {
             <div className="flex-1 border-t-2 border-gray-200 relative">
               <Menubar retractMenu={retractMenu} />
               <button
-                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center z-999 hidden sm:block"
+                className="px-[7px] py-[1px] rounded-full bg-white text-teal-300 text-3xl font-bold absolute -right-4 -top-4 text-center z-900 hidden sm:block"
                 onClick={() => setRetractMenu(!retractMenu)}
               >
                 {retractMenu ? '>' : '<'}
@@ -131,7 +131,7 @@ export default function Home() {
             <img
               src="/menu.png"
               alt="Hamburger menu"
-              className="w-16 h-16 sm:hidden z-999"
+              className="w-16 h-16 sm:hidden z-900"
               onClick={() => setShowMenu(!showMenu)}
             />
             <UserLabelDashboard firstName={firstName} lastName={lastName} />
