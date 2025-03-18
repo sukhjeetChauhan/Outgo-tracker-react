@@ -30,7 +30,7 @@ export default function Project() {
           )}
         </FormModal>
       )}
-      <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 mt-20">
+      <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 mt-28 sm:mt-20">
         <h2 className="text-teal-800 font-semibold text-2xl">
           Current Project Details
         </h2>
