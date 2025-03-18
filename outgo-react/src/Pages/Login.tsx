@@ -21,7 +21,7 @@ const Login = () => {
           Welcome to Outgo Tracker
         </h2>
         <img
-          className="w-7/8 sm:w-4/6 h-96 rounded-lg overflow-hidden"
+          className="w-7/8 sm:w-4/6 sm:h-96 rounded-lg overflow-hidden"
           src="/LoginPagePic.jpg"
           alt="illustration depicting managing expenses"
         />
