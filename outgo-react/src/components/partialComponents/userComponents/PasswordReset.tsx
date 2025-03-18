@@ -1,7 +1,7 @@
 import { useMsal } from '@azure/msal-react'
 import { passwordResetAuthority } from '../../../authentication/authConfig'
 
-export default function LoginButton() {
+export default function PasswordReset() {
   const { instance } = useMsal()
 
   const handlePasswordReset = () => {
@@ -13,7 +13,7 @@ export default function LoginButton() {
 
   return (
     <button
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className="bg-white hover:bg-teal-100 text-teal-500 hover:text-teal-700 font-bold py-2 px-4 rounded cursor-pointer"
       onClick={() => {
         handlePasswordReset()
       }}

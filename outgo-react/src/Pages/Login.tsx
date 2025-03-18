@@ -2,6 +2,7 @@ import { useMsal } from '@azure/msal-react'
 import LoginButton from '../components/partialComponents/userComponents/LoginButton'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import PasswordReset from '../components/partialComponents/userComponents/PasswordReset'
 
 const Login = () => {
   const { accounts } = useMsal()
@@ -32,6 +33,8 @@ const Login = () => {
           Lets get your Expenses sorted!
         </h2>
         <LoginButton />
+        <h2 className="text-xl sm:text-2xl font-bold  text-teal-500">OR</h2>
+        <PasswordReset />
       </div>
     </div>
   )
