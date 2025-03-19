@@ -2,10 +2,24 @@ import { useSelector } from 'react-redux'
 import { useGetProjectsByUserId } from '../../../apis/ProjectUser/useProjectUsers'
 import { RootState } from '../../../Redux/store'
 import ProjectSwitchButton from '../buttons/ProjectSwitchButton'
+import { useDeleteProject } from '../../../apis/Project/useProjects'
+import { message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProjectsList() {
   const { id } = useSelector((state: RootState) => state.user)
   const { data: projects, error, isLoading } = useGetProjectsByUserId(id)
+  const { mutate: deleteProject } = useDeleteProject()
+  const navigate = useNavigate()
+
+  function handleDeleteProject(id: number) {
+    deleteProject(id, {
+      onSuccess: () => {
+        message.success('Project Deleted Successfully')
+        navigate(0)
+      },
+    })
+  }
 
   if (isLoading) return <div>Loading...</div>
 
@@ -20,7 +34,15 @@ export default function ProjectsList() {
             className="flex justify-between items-center w-full"
           >
             <p>{project.name}</p>
-            <ProjectSwitchButton id={project.id} />
+            <div className="flex items-center justify-center gap-2">
+              <ProjectSwitchButton id={project.id} />
+              <button
+                className="cursor-pointer"
+                onClick={() => handleDeleteProject(project.id)}
+              >
+                <img src="/delete.png" className="w-8 h-8" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
