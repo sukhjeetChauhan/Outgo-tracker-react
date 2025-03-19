@@ -45,7 +45,7 @@ const userSlice = createSlice({
       state.lastName = ''
       state.defaultProjectId = null
     },
-    setDefaultProjectId: (state, action: PayloadAction<number>) => {
+    setDefaultProjectId: (state, action: PayloadAction<number | null>) => {
       state.defaultProjectId = action.payload
     },
   },

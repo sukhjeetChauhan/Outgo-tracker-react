@@ -1,21 +1,62 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useGetProjectsByUserId } from '../../../apis/ProjectUser/useProjectUsers'
 import { RootState } from '../../../Redux/store'
 import ProjectSwitchButton from '../buttons/ProjectSwitchButton'
 import { useDeleteProject } from '../../../apis/Project/useProjects'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { useUpdateUser } from '../../../apis/Users/useUsers'
+import { setDefaultProjectId } from '../../../Redux/Slices/userSlice'
 
 export default function ProjectsList() {
-  const { id } = useSelector((state: RootState) => state.user)
-  const { data: projects, error, isLoading } = useGetProjectsByUserId(id)
+  const {
+    id: userId,
+    firstName,
+    lastName,
+    defaultProjectId,
+  } = useSelector((state: RootState) => ({
+    id: state.user.id,
+    firstName: state.user.firstName,
+    lastName: state.user.lastName || '', // Provide a default value if lastName is undefined
+    defaultProjectId: state.user.defaultProjectId,
+  }))
+
+  const { data: projects, error, isLoading } = useGetProjectsByUserId(userId)
   const { mutate: deleteProject } = useDeleteProject()
+  const { mutate: updateUser } = useUpdateUser()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   function handleDeleteProject(id: number) {
     deleteProject(id, {
       onSuccess: () => {
         message.success('Project Deleted Successfully')
+        let newdefaultId
+        if (projects.length > 0) {
+          if (id === defaultProjectId) {
+            newdefaultId = projects[0].id
+          }
+        } else {
+          newdefaultId = null
+        }
+        if (
+          (projects.length > 0 && id === defaultProjectId) ||
+          projects.length === 0
+        )
+          dispatch(setDefaultProjectId(newdefaultId))
+        if (userId) {
+          updateUser({
+            id: userId,
+            user: {
+              id: userId,
+              firstName: firstName,
+              lastName: lastName,
+              email: '',
+              phoneNumber: '',
+              defaultProjectId: newdefaultId,
+            },
+          })
+        }
         navigate(0)
       },
     })
