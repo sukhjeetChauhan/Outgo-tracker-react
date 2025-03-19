@@ -42,8 +42,6 @@ export default function Home() {
   )
   const { mutate: createUser } = useCreateUser()
 
-  dispatch(setDefaultProjectId(null))
-
   useEffect(() => {
     if (id) {
       if (user) {
