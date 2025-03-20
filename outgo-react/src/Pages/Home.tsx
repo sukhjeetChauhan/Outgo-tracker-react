@@ -12,7 +12,7 @@ import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
 import {
   useCreateUser,
-  useUpdateUser,
+  // useUpdateUser,
   useUsersById,
 } from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
@@ -34,23 +34,23 @@ export default function Home() {
   const [ExpenseForm, setExpenseForm] = useState(false)
   const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
-  const { mutate: updateUser } = useUpdateUser()
+  // const { mutate: updateUser } = useUpdateUser()
 
   const location = useLocation()
 
-  if (id) {
-    updateUser({
-      id: id,
-      user: {
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: '',
-        phoneNumber: '',
-        defaultProjectId: null,
-      },
-    })
-  }
+  // if (id) {
+  //   updateUser({
+  //     id: id,
+  //     user: {
+  //       id: id,
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       email: '',
+  //       phoneNumber: '',
+  //       defaultProjectId: null,
+  //     },
+  //   })
+  // }
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
