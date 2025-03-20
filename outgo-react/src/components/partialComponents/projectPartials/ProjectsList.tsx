@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useGetProjectsByUserId } from '../../../apis/ProjectUser/useProjectUsers'
 import { RootState } from '../../../Redux/store'
 import ProjectSwitchButton from '../buttons/ProjectSwitchButton'
@@ -6,7 +6,6 @@ import { useDeleteProject } from '../../../apis/Project/useProjects'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateUser } from '../../../apis/Users/useUsers'
-import { setDefaultProjectId } from '../../../Redux/Slices/userSlice'
 
 export default function ProjectsList() {
   const {
@@ -24,26 +23,31 @@ export default function ProjectsList() {
   const { data: projects, error, isLoading } = useGetProjectsByUserId(userId)
   const { mutate: deleteProject } = useDeleteProject()
   const { mutate: updateUser } = useUpdateUser()
-  const dispatch = useDispatch()
+
   const navigate = useNavigate()
 
   function handleDeleteProject(id: number) {
     deleteProject(id, {
       onSuccess: () => {
         message.success('Project Deleted Successfully')
+      
         let newdefaultId
-        if (projects.length > 0) {
+        if (projects.length > 1) {
           if (id === defaultProjectId) {
-            newdefaultId = projects[0].id
+           
+            newdefaultId =
+              projects[0].id === defaultProjectId
+                ? projects[1].id
+                : projects[0].id
           }
         } else {
           newdefaultId = null
         }
         if (
-          (projects.length > 0 && id === defaultProjectId) ||
-          projects.length === 0
+          (projects.length > 1 && id === defaultProjectId) ||
+          projects.length === 1
         )
-          dispatch(setDefaultProjectId(newdefaultId))
+          
         if (userId) {
           updateUser({
             id: userId,

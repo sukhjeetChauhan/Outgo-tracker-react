@@ -10,7 +10,11 @@ import Menubar from '../components/Menubar'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
-import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
+import {
+  useCreateUser,
+  useUpdateUser,
+  useUsersById,
+} from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
 import Dashboard from './Dashboard'
 import { useLocation, Outlet } from 'react-router-dom'
@@ -21,7 +25,7 @@ import UserLabelDashboard from '../components/partialComponents/userComponents/U
 export default function Home() {
   const { instance, accounts } = useMsal()
   const dispatch = useDispatch<AppDispatch>()
-  const { id, firstName, lastName } = useSelector(
+  const { id, firstName, lastName, defaultProjectId } = useSelector(
     (state: RootState) => state.user
   )
   const [retractMenu, setRetractMenu] = useState(false)
@@ -30,8 +34,23 @@ export default function Home() {
   const [ExpenseForm, setExpenseForm] = useState(false)
   const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+  const { mutate: updateUser } = useUpdateUser()
 
   const location = useLocation()
+
+  if (id) {
+    updateUser({
+      id: id,
+      user: {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: '',
+        phoneNumber: '',
+        defaultProjectId: null,
+      },
+    })
+  }
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
@@ -46,6 +65,8 @@ export default function Home() {
     if (id) {
       if (user) {
         if (user.defaultProjectId === null) {
+          console.log('User has no default project')
+          dispatch(setDefaultProjectId(null))
           SetShowAddProjectModal(true)
         } else {
           dispatch(setDefaultProjectId(user.defaultProjectId))
