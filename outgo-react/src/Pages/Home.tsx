@@ -25,7 +25,7 @@ import UserLabelDashboard from '../components/partialComponents/userComponents/U
 export default function Home() {
   const { instance, accounts } = useMsal()
   const dispatch = useDispatch<AppDispatch>()
-  const { id, firstName, lastName, defaultProjectId } = useSelector(
+  const { id, firstName, lastName } = useSelector(
     (state: RootState) => state.user
   )
   const [retractMenu, setRetractMenu] = useState(false)
