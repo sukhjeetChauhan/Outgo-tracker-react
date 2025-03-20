@@ -1,7 +1,5 @@
 import { useMsal } from '@azure/msal-react'
 import { useDispatch, useSelector } from 'react-redux'
-// import LoginButton from '../components/partialComponents/userComponents/LoginButton'
-// import PasswordReset from '../components/userComponents/PasswordReset'
 import { fetchUser } from '../Redux/Slices/userSlice'
 import { RootState, AppDispatch } from '../Redux/store'
 import { useEffect, useState } from 'react'
@@ -10,17 +8,12 @@ import Menubar from '../components/Menubar'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
-import {
-  useCreateUser,
-  // useUpdateUser,
-  useUsersById,
-} from '../apis/Users/useUsers'
+import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
 import Dashboard from './Dashboard'
 import { useLocation, Outlet } from 'react-router-dom'
 import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
 import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
-// import fetchData from '../assets/apis/fetchapi'
 
 export default function Home() {
   const { instance, accounts } = useMsal()
@@ -34,23 +27,8 @@ export default function Home() {
   const [ExpenseForm, setExpenseForm] = useState(false)
   const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
-  // const { mutate: updateUser } = useUpdateUser()
 
   const location = useLocation()
-
-  // if (id) {
-  //   updateUser({
-  //     id: id,
-  //     user: {
-  //       id: id,
-  //       firstName: firstName,
-  //       lastName: lastName,
-  //       email: '',
-  //       phoneNumber: '',
-  //       defaultProjectId: null,
-  //     },
-  //   })
-  // }
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
@@ -98,9 +76,6 @@ export default function Home() {
     }
   }, [user, id, firstName, lastName, createUser, userLoading, dispatch])
 
-  // if (status === 'loading') return <p>Loading user...</p>
-  // if (status === 'failed') return <p>Error fetching user</p>
-
   return (
     <div className="w-full min-h-screen bg-gray-200">
       {showModal && (
@@ -141,7 +116,6 @@ export default function Home() {
               </button>
             </div>
             <div className="border-t-2 border-gray-200 flex flex-col gap-4 items-center p-4 my-4 w-full">
-              {/* <LoginButton /> */}
               <LogoutButton />
             </div>
           </div>
@@ -163,8 +137,6 @@ export default function Home() {
               setShowModal={setShowModal}
               setExpenseForm={setExpenseForm}
               setIncomeForm={setIncomeForm}
-              // firstName={firstName}
-              // lastName={lastName}
             />
           ) : (
             <Outlet />
