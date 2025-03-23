@@ -165,7 +165,7 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
             control={control}
             render={({ field }) => (
               <Select {...field} placeholder="Select income type">
-                <Select.Option value="Oneoff">Oneoff</Select.Option>
+                <Select.Option value="OneOff">OneOff</Select.Option>
                 <Select.Option value="Recurring">Recurring</Select.Option>
               </Select>
             )}
