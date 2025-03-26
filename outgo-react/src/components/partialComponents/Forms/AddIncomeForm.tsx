@@ -98,7 +98,6 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         ...project,
         savings: project.savings + data.amount,
       }
-      console.log(updatedProject.savings)
 
       try {
         createIncome(postData)

@@ -46,7 +46,7 @@ export class ProjectRepository {
   }
 
   static async update(
-    id: number,
+    id: number | null,
     project: Project,
     instance: IPublicClientApplication,
     accounts: AccountInfo[]

@@ -6,16 +6,23 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import { useProjectById } from '../apis/Project/useProjects'
 import ProjectsList from '../components/partialComponents/projectPartials/ProjectsList'
+import UpdateProjectForm from '../components/partialComponents/Forms/updateProjectForm'
 
 export default function Project() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
   const { data: project, isLoading, isError } = useProjectById(defaultProjectId)
   const [showModal, setShowModal] = useState(false)
   const [ProjectForm, setProjectForm] = useState(false)
+  const [updateForm, setUpdateForm] = useState(false)
 
   if (defaultProjectId) {
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error fetching project</div>
+  }
+
+  function editProject(): void {
+    setUpdateForm(true)
+    setShowModal(true)
   }
 
   return (
@@ -28,9 +35,15 @@ export default function Project() {
               setProjectForm={setProjectForm}
             />
           )}
+          {updateForm && (
+            <UpdateProjectForm
+              setShowModal={setShowModal}
+              setUpdateForm={setUpdateForm}
+            />
+          )}
         </FormModal>
       )}
-      <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 mt-32 sm:mt-20">
+      <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 mt-32 sm:mt-20 relative">
         <h2 className="text-teal-800 font-semibold text-2xl">
           Current Project Details
         </h2>
@@ -48,6 +61,11 @@ export default function Project() {
             project ? project.savings : ''
           }`}</p>
         </div>
+        <img
+          src="/edit.png"
+          className="w-8 h-8 absolute right-6 top-6 sm:right-12 sm:top-12 cursor-pointer"
+          onClick={() => editProject()}
+        />
       </div>
       <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">
         <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4">

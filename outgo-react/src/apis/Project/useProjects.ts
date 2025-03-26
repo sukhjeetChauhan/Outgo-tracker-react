@@ -41,7 +41,7 @@ export const useUpdateProject = () => {
   const { instance, accounts } = useMsal() // Get MSAL instance & accounts
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, project }: { id: number; project: Project }) =>
+    mutationFn: ({ id, project }: { id: number | null; project: Project }) =>
       ProjectRepository.update(id, project, instance, accounts),
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
