@@ -98,10 +98,11 @@ const AddIncomeForm = ({ setShowModal, setIncomeForm }: AddIncomeFormProps) => {
         ...project,
         savings: project.savings + data.amount,
       }
+      console.log(updatedProject.savings)
 
       try {
-        await createIncome(postData)
-        await updateProject({ id: defaultProjectId, project: updatedProject })
+        createIncome(postData)
+        updateProject({ id: defaultProjectId, project: updatedProject })
         message.success('Income added successfully')
         reset()
         setShowModal(false)

@@ -15,8 +15,6 @@ export default function OverallDetails() {
   const { data: yearlyIncome, isLoading: incomeLoading } =
     useYearlyIncome(defaultProjectId)
 
-  console.log(monthlyExpenses)
-
   const sortData = useMemo(() => {
     let totalMonthlyExpense
     let totalIncome
