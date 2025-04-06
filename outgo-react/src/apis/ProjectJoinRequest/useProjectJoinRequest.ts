@@ -11,6 +11,13 @@ export const useGetRequestsByProjectId = (projectId: number | null) => {
   })
 }
 
+export const useGetRequestsByUserId = (userId: string | null) => {
+  return useQuery({
+    queryKey: ['projectJoinRequest', 'requests', userId],
+    queryFn: () => ProjectJoinRequestRepository.getByUserId(userId),
+  })
+}
+
 export const useCreateProjectJoinRequest = () => {
   const queryClient = useQueryClient()
   return useMutation({

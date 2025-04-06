@@ -17,6 +17,13 @@ export class ProjectJoinRequestRepository {
     return data
   }
 
+  static async getByUserId(userId: string | null) {
+    const { data } = await axios.get(
+      `${backendApiUrl}/ProjectJoinRequest/UserId/${userId}`
+    )
+    return data
+  }
+
   static async create(projectJoinRequest: ProjectJoinRequest) {
     const { data } = await axios.post(
       `${backendApiUrl}/ProjectJoinRequest`,

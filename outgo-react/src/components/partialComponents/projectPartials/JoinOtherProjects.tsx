@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
 import {
   useCreateProjectJoinRequest,
-  useGetRequestsByProjectId,
+  useGetRequestsByUserId,
 } from '../../../apis/ProjectJoinRequest/useProjectJoinRequest'
 import { Status } from '../../../Types/enums'
 import { message } from 'antd'
@@ -20,8 +20,7 @@ export default function JoinOtherProjects() {
   )
 
   const { mutate: sendRequest } = useCreateProjectJoinRequest()
-  const { data } = useGetRequestsByProjectId(projectId)
-  console.log(data)
+  const { data: projectRequestData } = useGetRequestsByUserId(id)
 
   useEffect(() => {
     async function fetchProjectByName() {
@@ -116,7 +115,14 @@ export default function JoinOtherProjects() {
           )}
         </div>
       )}
-      <h2 className="text-teal-800 font-semibold text-2xl">Joined Projects</h2>
+      <div className="flex flex-col items-start justify-center gap-4">
+        <h2 className="text-teal-800 font-semibold text-2xl">
+          Joined Projects
+        </h2>
+        {projectRequestData && (
+          <p className="text-teal-800 text-xl">{`Your Request status: ${projectRequestData.status}`}</p>
+        )}
+      </div>
       <button
         className="rounded mt-4 px-4 py-2 bg-teal-500 text-white text-lg font-semibold"
         onClick={() => setShowModal(true)}
