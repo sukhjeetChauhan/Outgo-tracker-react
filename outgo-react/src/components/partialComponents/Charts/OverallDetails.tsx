@@ -16,8 +16,8 @@ export default function OverallDetails() {
     useYearlyIncome(defaultProjectId)
 
   const sortData = useMemo(() => {
-    let totalMonthlyExpense
-    let totalIncome
+    let totalMonthlyExpense = 0
+    let totalIncome = 0
     if (monthlyExpenses?.length > 0) {
       totalMonthlyExpense = monthlyExpenses?.reduce(
         (a: number, c: Expense) => a + c.amount,

@@ -7,6 +7,7 @@ import { RootState } from '../Redux/store'
 import { useProjectById } from '../apis/Project/useProjects'
 import ProjectsList from '../components/partialComponents/projectPartials/ProjectsList'
 import UpdateProjectForm from '../components/partialComponents/Forms/updateProjectForm'
+import JoinOtherProjects from '../components/partialComponents/projectPartials/JoinOtherProjects'
 
 export default function Project() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
@@ -78,10 +79,8 @@ export default function Project() {
             setShowModal={setShowModal}
           />
         </div>
-        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 min-h-36">
-          <h2 className="text-teal-800 font-semibold text-2xl">
-            Joined Projects
-          </h2>
+        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 min-h-36 relative">
+          <JoinOtherProjects />
         </div>
       </div>
     </div>

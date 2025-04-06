@@ -3,14 +3,14 @@ import { Status } from '../../Types/enums'
 import { backendApiUrl } from '../Expenses/ExpensesRepository'
 
 export interface ProjectJoinRequest {
-  projectId: number
-  userId: string
+  projectId: number | null
+  userId: string | null
   userName: string
   status: Status
 }
 
 export class ProjectJoinRequestRepository {
-  static async getByProjectId(projectId: number) {
+  static async getByProjectId(projectId: number | null) {
     const { data } = await axios.get(
       `${backendApiUrl}/ProjectJoinRequest/ProjectId/${projectId}`
     )

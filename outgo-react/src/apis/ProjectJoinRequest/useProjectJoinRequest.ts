@@ -4,7 +4,7 @@ import {
   ProjectJoinRequestRepository,
 } from './ProjectJoinRequestRepository'
 
-export const useGetRequestsByProjectId = (projectId: number) => {
+export const useGetRequestsByProjectId = (projectId: number | null) => {
   return useQuery({
     queryKey: ['projectJoinRequest', 'requests', projectId],
     queryFn: () => ProjectJoinRequestRepository.getByProjectId(projectId),
