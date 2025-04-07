@@ -9,6 +9,7 @@ import ProjectsList from '../components/partialComponents/projectPartials/Projec
 import UpdateProjectForm from '../components/partialComponents/Forms/updateProjectForm'
 import JoinOtherProjects from '../components/partialComponents/projectPartials/JoinOtherProjects'
 import { useGetRequestsByProjectId } from '../apis/ProjectJoinRequest/useProjectJoinRequest'
+import ProjectRequestNotification from '../components/partialComponents/projectPartials/ProjectRequestNotification'
 
 export default function Project() {
   const { defaultProjectId } = useSelector((state: RootState) => state.user)
@@ -29,7 +30,7 @@ export default function Project() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center max-h-[calc(100vh-80px)] gap-4 w-full p-4 overflow-y-auto mt-32 sm:mt-20">
+    <div className="flex flex-col items-center justify-center h-screen gap-4 w-full p-4 overflow-y-auto pt-32 sm:pt-24">
       {showModal && (
         <FormModal>
           {ProjectForm && (
@@ -47,14 +48,7 @@ export default function Project() {
         </FormModal>
       )}
       {projectRequest && (
-        <div className="w-full h-20 bg-teal-100 rounded">
-          <div className="flex justify-between items-center p-4">
-            <p className="text-lg text-teal-900">{`You have a Project Join Request from ${projectRequest?.userName}`}</p>
-            <button className="rounded px-4 py-2 bg-teal-500 text-white text-lg font-semibold cursor-pointer">
-              Accept
-            </button>
-          </div>
-        </div>
+        <ProjectRequestNotification projectRequest={projectRequest} />
       )}
       <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 relative">
         <h2 className="text-teal-800 font-semibold text-2xl">

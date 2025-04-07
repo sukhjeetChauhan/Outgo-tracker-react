@@ -47,7 +47,7 @@ export const useUpdateProjectJoinRequest = () => {
 export const useDeleteProjectJoinRequest = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ProjectJoinRequestRepository.delete,
+    mutationFn: (id: number) => ProjectJoinRequestRepository.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projectJoinRequest'] })
     },

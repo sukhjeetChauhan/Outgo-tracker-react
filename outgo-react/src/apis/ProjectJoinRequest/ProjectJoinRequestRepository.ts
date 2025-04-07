@@ -46,6 +46,7 @@ export class ProjectJoinRequestRepository {
   }
 
   static async delete(id: number) {
+    console.log('Deleting project join request with ID:', id)
     try {
       const { data } = await axios.delete(
         `${backendApiUrl}/ProjectJoinRequest/${id}`

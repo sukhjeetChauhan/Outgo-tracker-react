@@ -1,126 +1,50 @@
-import { useEffect, useState } from 'react'
-import CloseModalButton from '../buttons/CloseModalButton'
-import { ProjectRepository } from '../../../apis/Project/ProjectRepository'
+import { useState } from 'react' //
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
-import {
-  useCreateProjectJoinRequest,
-  useGetRequestsByUserId,
-} from '../../../apis/ProjectJoinRequest/useProjectJoinRequest'
-import { Status } from '../../../Types/enums'
-import { message } from 'antd'
+import { useGetRequestsByUserId } from '../../../apis/ProjectJoinRequest/useProjectJoinRequest'
+import ProjectJoinRequestForm from './ProjectJoinRequestForm'
 
 export default function JoinOtherProjects() {
   const [showModal, setShowModal] = useState(false)
-  const [projectName, setProjectName] = useState('')
-  const [value, setValue] = useState('')
-  const [projectId, setProjectId] = useState<number | null>(null)
-  const { id, firstName, lastName } = useSelector(
-    (state: RootState) => state.user
-  )
+  const [display, setDisplay] = useState('project')
 
-  const { mutate: sendRequest } = useCreateProjectJoinRequest()
+  const { id } = useSelector((state: RootState) => state.user)
+
   const { data: projectRequestData } = useGetRequestsByUserId(id)
 
-  useEffect(() => {
-    async function fetchProjectByName() {
-      if (projectName) {
-        try {
-          const result = await ProjectRepository.getByName(projectName)
-
-          if (result) {
-            // Handle the result of the project search
-            return setProjectId(result)
-          }
-        } catch (error) {
-          // Handle the case where no project is found
-          console.log(error, 'No project found with that name')
-          return setProjectId(-1)
-        }
-      }
-    }
-    fetchProjectByName()
-  }, [projectName])
-
-  function handleJoinProject() {
-    const postData = {
-      projectId: projectId,
-      userId: id,
-      userName: `${firstName} ${lastName}`,
-      status: 'Pending' as Status,
-    }
-    sendRequest(postData, {
-      onSuccess: () => {
-        console.log('Project join request sent successfully')
-        message.success('Project join request sent successfully')
-        setShowModal(false)
-        setProjectId(null)
-        setProjectName('')
-        setValue('')
-      },
-      onError: (error) => {
-        console.error('Error sending project join request:', error)
-      },
-    })
-  }
+  console.log(projectRequestData)
 
   return (
     <>
-      {showModal && (
-        <div className="h-full w-full bg-gray-100/90 absolute top-0 left-0 flex flex-col gap-8 items-center rounded pt-10">
-          <p className="text-lg font-semibold text-teal-700">
-            Type in project name to add
-          </p>
-          <div className="flex gap-4 items-center justify-center">
-            <input
-              value={value}
-              placeholder="Project Name"
-              className="p-2 border-2 border-gray-400 rounded"
-              onChange={(e) => setValue(e.target.value)}
-            />
-            <button
-              className="rounded px-4 py-2 bg-teal-500 text-white text-lg font-semibold cursor-pointer"
-              onClick={() => {
-                setProjectName(value)
-                setValue('')
-              }}
-            >
-              Search
-            </button>
-            <CloseModalButton
-              CloseFunction={() => {
-                setShowModal(false)
-                setProjectId(null)
-                setProjectName('')
-                setValue('')
-              }}
-            />
-          </div>
-          {projectName !== '' && (
-            <div className="flex items-center justify-center gap-4">
-              <p className="text-lg font-semibold text-teal-700">
-                {projectId && projectId !== -1
-                  ? `Found Project: ${projectName}`
-                  : 'No project found with that Name'}
-              </p>
-              {projectId && projectId !== -1 && (
-                <button
-                  className="rounded px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-lg font-semibold cursor-pointer"
-                  onClick={() => handleJoinProject()}
-                >
-                  Join Project
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-      <div className="flex flex-col items-start justify-center gap-4">
+      {showModal && <ProjectJoinRequestForm setShowModal={setShowModal} />}
+      <div className="flex flex-col items-start justify-center">
         <h2 className="text-teal-800 font-semibold text-2xl">
           Joined Projects
         </h2>
+        <div className="flex w-full justify-start items-center gap-2">
+          <button
+            className={`rounded mt-4 px-4 py-2 ${
+              display == 'project'
+                ? 'bg-teal-500 text-white'
+                : 'bg-white border-2 border-teal-500 text-teal-500'
+            } text-base text-center cursor-pointer`}
+            onClick={() => setDisplay('project')}
+          >
+            Projects
+          </button>
+          <button
+            className={`rounded mt-4 px-4 py-2 ${
+              display == 'request'
+                ? 'bg-teal-500 text-white'
+                : 'bg-white border-2 border-teal-500 text-teal-500'
+            } text-base text-center cursor-pointer`}
+            onClick={() => setDisplay('request')}
+          >
+            Requests
+          </button>
+        </div>
         {projectRequestData && (
-          <p className="text-teal-800 text-xl">{`Your Request status: ${projectRequestData.status}`}</p>
+          <p className="text-teal-800 text-xl mt-4">{`Your Request status: ${projectRequestData.status}`}</p>
         )}
       </div>
       <button
