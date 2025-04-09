@@ -65,4 +65,19 @@ export class ProjectUserRepository {
       throw error
     }
   }
+
+  static async deleteByProjectAndUserId(
+    projectId: number,
+    userId: string | null
+  ) {
+    try {
+      const { data } = await axios.delete(
+        `${backendApiUrl}/ProjectUser/DeleteByProjectAndUser/${projectId}/${userId}`
+      )
+      return data
+    } catch (error) {
+      console.error('Error deleting project user:', error)
+      throw error
+    }
+  }
 }

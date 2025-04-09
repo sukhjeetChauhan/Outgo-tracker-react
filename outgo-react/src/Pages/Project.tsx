@@ -30,7 +30,7 @@ export default function Project() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4 w-full p-4 overflow-y-auto pt-32 sm:pt-24">
+    <div className="flex flex-col items-center justify-center h-screen gap-4 w-full p-4 overflow-y-auto pt-48 sm:pt-24">
       {showModal && (
         <FormModal>
           {ProjectForm && (
@@ -79,7 +79,7 @@ export default function Project() {
           <h2 className="text-teal-800 font-semibold text-2xl">
             Created Projects
           </h2>
-          <ProjectsList />
+          <ProjectsList role="Admin" />
           <ProjectCreateButton
             showForm={setProjectForm}
             setShowModal={setShowModal}

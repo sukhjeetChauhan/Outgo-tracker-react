@@ -55,3 +55,19 @@ export const useDeleteProjectUser = () => {
     },
   })
 }
+
+export const useDeleteByProjectAndUserId = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      projectId,
+      userId,
+    }: {
+      projectId: number
+      userId: string | null
+    }) => ProjectUserRepository.deleteByProjectAndUserId(projectId, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projectUser'] })
+    },
+  })
+}

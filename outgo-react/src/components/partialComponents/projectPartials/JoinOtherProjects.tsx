@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
 import { useGetRequestsByUserId } from '../../../apis/ProjectJoinRequest/useProjectJoinRequest'
 import ProjectJoinRequestForm from './ProjectJoinRequestForm'
+import ProjectsList from './ProjectsList'
 
 export default function JoinOtherProjects() {
   const [showModal, setShowModal] = useState(false)
@@ -12,8 +13,6 @@ export default function JoinOtherProjects() {
 
   const { data: projectRequestData } = useGetRequestsByUserId(id)
 
-  console.log(projectRequestData)
-
   return (
     <>
       {showModal && <ProjectJoinRequestForm setShowModal={setShowModal} />}
@@ -21,7 +20,7 @@ export default function JoinOtherProjects() {
         <h2 className="text-teal-800 font-semibold text-2xl">
           Joined Projects
         </h2>
-        <div className="flex w-full justify-start items-center gap-2">
+        <div className="flex w-full justify-start items-center gap-2 mb-4">
           <button
             className={`rounded mt-4 px-4 py-2 ${
               display == 'project'
@@ -43,9 +42,10 @@ export default function JoinOtherProjects() {
             Requests
           </button>
         </div>
-        {projectRequestData && (
+        {projectRequestData && display === 'request' && (
           <p className="text-teal-800 text-xl mt-4">{`Your Request status: ${projectRequestData.status}`}</p>
         )}
+        {display === 'project' && <ProjectsList role="User" />}
       </div>
       <button
         className="rounded mt-4 px-4 py-2 bg-teal-500 text-white text-lg font-semibold"

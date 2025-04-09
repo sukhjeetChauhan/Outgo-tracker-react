@@ -25,6 +25,14 @@ export const useProjectByName = (name: string) => {
   })
 }
 
+export const useProjectByUserRole = (userId: string | null, role: string) => {
+  return useQuery({
+    queryKey: ['projects', userId, role],
+    queryFn: () => ProjectRepository.getByUserRole(userId, role),
+    enabled: !!userId && !!role, // Prevents execution if userId or role is null or undefined
+  })
+}
+
 export const useCreateProject = () => {
   const { instance, accounts } = useMsal() // Get MSAL instance
   const queryClient = useQueryClient()

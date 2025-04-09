@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
 import { ProjectUser } from '../../../apis/ProjectUser/ProjectUserRepository'
 
-interface ProjectUserWithId extends ProjectUser {
+export interface ProjectUserWithId extends ProjectUser {
   id: number
 }
 

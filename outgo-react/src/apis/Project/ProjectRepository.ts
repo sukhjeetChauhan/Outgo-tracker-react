@@ -18,6 +18,13 @@ export class ProjectRepository {
     return data
   }
 
+  static async getByUserRole(userId: string | null, role: string) {
+    const { data } = await axios.get(
+      `${backendApiUrl}/Project/role/${userId}/${role}`
+    )
+    return data
+  }
+
   static async getById(id: number | null) {
     const { data } = await axios.get(`${backendApiUrl}/Project/${id}`)
     return data
