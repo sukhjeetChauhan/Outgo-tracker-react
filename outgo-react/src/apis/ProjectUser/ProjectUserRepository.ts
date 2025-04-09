@@ -9,6 +9,13 @@ export interface ProjectUser {
 }
 
 export class ProjectUserRepository {
+  static async getByUserId(userId: string | null) {
+    const { data } = await axios.get(
+      `${backendApiUrl}/ProjectUser/GetByUserId/${userId}`
+    )
+    return data
+  }
+
   static async getUserByProjectId(projectId: number) {
     const { data } = await axios.get(
       `${backendApiUrl}/ProjectUser/GetUsersByProjectId/${projectId}`

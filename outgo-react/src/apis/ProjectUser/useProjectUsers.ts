@@ -1,6 +1,13 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { ProjectUser, ProjectUserRepository } from './ProjectUserRepository'
 
+export const useGetProjectUserByUserId = (userId: string | null) => {
+  return useQuery({
+    queryKey: ['projectUser', userId],
+    queryFn: () => ProjectUserRepository.getByUserId(userId),
+  })
+}
+
 export const useGetUsersByProjectId = (projectId: number) => {
   return useQuery({
     queryKey: ['projectUser', 'users', projectId],
