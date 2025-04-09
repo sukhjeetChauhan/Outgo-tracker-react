@@ -81,7 +81,7 @@ export default function ProjectsList({ role }: { role: string }) {
               },
             })
           }
-        navigate(0)
+        // navigate(0)
       },
     })
     // }
