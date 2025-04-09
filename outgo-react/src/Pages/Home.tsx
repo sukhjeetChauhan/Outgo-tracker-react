@@ -44,19 +44,19 @@ export default function Home() {
   )
   const { mutate: createUser } = useCreateUser()
   dispatch(setDefaultProjectId(null)) // to fix production errors
-  // if (id) {
-  //   updateUser({
-  //     id: id,
-  //     user: {
-  //       id: id,
-  //       firstName: firstName,
-  //       lastName: lastName,
-  //       email: '',
-  //       phoneNumber: '',
-  //       defaultProjectId: null,
-  //     },
-  //   })
-  // }
+  if (id) {
+    updateUser({
+      id: id,
+      user: {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: '',
+        phoneNumber: '',
+        defaultProjectId: null,
+      },
+    })
+  }
 
   useEffect(() => {
     if (id) {
