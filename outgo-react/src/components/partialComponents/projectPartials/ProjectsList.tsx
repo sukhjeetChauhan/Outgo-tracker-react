@@ -7,7 +7,7 @@ import {
   useProjectByUserRole,
 } from '../../../apis/Project/useProjects'
 import { message } from 'antd'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { useUpdateUser } from '../../../apis/Users/useUsers'
 // import { useDeleteByProjectAndUserId } from '../../../apis/ProjectUser/useProjectUsers'
 
@@ -33,7 +33,7 @@ export default function ProjectsList({ role }: { role: string }) {
   const { mutate: updateUser } = useUpdateUser()
   // const { mutate: deleteUserProject } = useDeleteByProjectAndUserId()
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   function handleDeleteProject(id: number) {
     // if (role === 'User') {
