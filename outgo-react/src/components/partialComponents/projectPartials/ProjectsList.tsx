@@ -9,7 +9,7 @@ import {
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateUser } from '../../../apis/Users/useUsers'
-import { useDeleteByProjectAndUserId } from '../../../apis/ProjectUser/useProjectUsers'
+// import { useDeleteByProjectAndUserId } from '../../../apis/ProjectUser/useProjectUsers'
 
 export default function ProjectsList({ role }: { role: string }) {
   const {
@@ -31,21 +31,21 @@ export default function ProjectsList({ role }: { role: string }) {
   } = useProjectByUserRole(userId, role)
   const { mutate: deleteProject } = useDeleteProject()
   const { mutate: updateUser } = useUpdateUser()
-  const { mutate: deleteUserProject } = useDeleteByProjectAndUserId()
+  // const { mutate: deleteUserProject } = useDeleteByProjectAndUserId()
 
   const navigate = useNavigate()
 
   function handleDeleteProject(id: number) {
-    if (role === 'User') {
-      deleteUserProject({
-        userId: userId,
-        projectId: id,
-      })
-      message.success('Project Deleted Successfully')
-      navigate(0)
-    }
+    // if (role === 'User') {
+    //   deleteUserProject({
+    //     userId: userId,
+    //     projectId: id,
+    //   })
+    //   message.success('Project Deleted Successfully')
+    //   navigate(0)
+    // }
 
-    if (role === 'Admin') {
+    // if (role === 'Admin') {
       console.log('Deleting project with id:', id)
       deleteProject(id, {
         onSuccess: () => {
@@ -83,7 +83,7 @@ export default function ProjectsList({ role }: { role: string }) {
           navigate(0)
         },
       })
-    }
+    // }
   }
 
   if (isLoading) return <div>Loading...</div>
