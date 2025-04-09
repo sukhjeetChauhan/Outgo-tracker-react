@@ -46,44 +46,44 @@ export default function ProjectsList({ role }: { role: string }) {
     // }
 
     // if (role === 'Admin') {
-      console.log('Deleting project with id:', id)
-      deleteProject(id, {
-        onSuccess: () => {
-          message.success('Project Deleted Successfully')
+    console.log('Deleting project with id:', id)
+    deleteProject(id, {
+      onSuccess: () => {
+        message.success('Project Deleted Successfully')
 
-          let newdefaultId
-          if (projects.length > 1) {
-            if (id === defaultProjectId) {
-              newdefaultId =
-                projects[0].id === defaultProjectId
-                  ? projects[1].id
-                  : projects[0].id
-            }
-          } else {
-            
-            newdefaultId = null
+        let newdefaultId
+        if (projects.length > 1) {
+          if (id === defaultProjectId) {
+            newdefaultId =
+              projects[0].id === defaultProjectId
+                ? projects[1].id
+                : projects[0].id
           }
-          console.log('New default project id:', newdefaultId)
-          if (
-            (projects.length > 1 && id === defaultProjectId) ||
-            projects.length === 1
-          )
-            if (userId) {
-              updateUser({
+        } else {
+          newdefaultId = null
+        }
+        console.log('New default project id:', newdefaultId)
+        console.log('project length:', projects.length)
+        if (
+          (projects.length > 1 && id === defaultProjectId) ||
+          projects.length === 1
+        )
+          if (userId) {
+            updateUser({
+              id: userId,
+              user: {
                 id: userId,
-                user: {
-                  id: userId,
-                  firstName: firstName,
-                  lastName: lastName,
-                  email: '',
-                  phoneNumber: '',
-                  defaultProjectId: newdefaultId,
-                },
-              })
-            }
-          navigate(0)
-        },
-      })
+                firstName: firstName,
+                lastName: lastName,
+                email: '',
+                phoneNumber: '',
+                defaultProjectId: newdefaultId,
+              },
+            })
+          }
+        navigate(0)
+      },
+    })
     // }
   }
 
