@@ -8,7 +8,11 @@ import Menubar from '../components/Menubar'
 import FormModal from '../components/partialComponents/Modals/FormModal'
 import AddIncomeForm from '../components/partialComponents/Forms/AddIncomeForm'
 import AddExpenseForm from '../components/partialComponents/Forms/AddExpenseFrom'
-import { useCreateUser, useUsersById } from '../apis/Users/useUsers'
+import {
+  useCreateUser,
+  useUpdateUser,
+  useUsersById,
+} from '../apis/Users/useUsers'
 import { setDefaultProjectId } from '../Redux/Slices/userSlice'
 import Dashboard from './Dashboard'
 import { useLocation, Outlet } from 'react-router-dom'
@@ -29,6 +33,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false)
 
   const location = useLocation()
+  const { mutate: updateUser } = useUpdateUser()
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
@@ -39,6 +44,19 @@ export default function Home() {
   )
   const { mutate: createUser } = useCreateUser()
   dispatch(setDefaultProjectId(null)) // to fix production errors
+  if (id) {
+    updateUser({
+      id: id,
+      user: {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: '',
+        phoneNumber: '',
+        defaultProjectId: null,
+      },
+    })
+  }
 
   useEffect(() => {
     if (id) {
