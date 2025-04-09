@@ -60,7 +60,7 @@ export default function ProjectsList({ role }: { role: string }) {
                   : projects[0].id
             }
           } else {
-            console.log('zero projects')
+            
             newdefaultId = null
           }
           if (
