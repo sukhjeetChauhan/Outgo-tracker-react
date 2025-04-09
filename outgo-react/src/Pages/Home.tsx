@@ -38,7 +38,7 @@ export default function Home() {
     id as unknown as string
   )
   const { mutate: createUser } = useCreateUser()
-  // dispatch(setDefaultProjectId(null))// to fix production errors
+  dispatch(setDefaultProjectId(null)) // to fix production errors
 
   useEffect(() => {
     if (id) {

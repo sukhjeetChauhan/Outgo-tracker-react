@@ -46,6 +46,7 @@ export default function ProjectsList({ role }: { role: string }) {
     }
 
     if (role === 'Admin') {
+      console.log('Deleting project with id:', id)
       deleteProject(id, {
         onSuccess: () => {
           message.success('Project Deleted Successfully')
@@ -59,6 +60,7 @@ export default function ProjectsList({ role }: { role: string }) {
                   : projects[0].id
             }
           } else {
+            console.log('zero projects')
             newdefaultId = null
           }
           if (
