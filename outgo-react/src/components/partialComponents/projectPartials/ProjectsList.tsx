@@ -63,6 +63,7 @@ export default function ProjectsList({ role }: { role: string }) {
             
             newdefaultId = null
           }
+          console.log('New default project id:', newdefaultId)
           if (
             (projects.length > 1 && id === defaultProjectId) ||
             projects.length === 1
