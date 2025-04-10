@@ -16,7 +16,7 @@ export default function JoinOtherProjects() {
   return (
     <>
       {showModal && <ProjectJoinRequestForm setShowModal={setShowModal} />}
-      <div className="flex flex-col items-start justify-center">
+      <div className="flex flex-col items-start justify-center w-full">
         <h2 className="text-teal-800 font-semibold text-2xl">
           Joined Projects
         </h2>
