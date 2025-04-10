@@ -7,9 +7,9 @@ import {
   useProjectByUserRole,
 } from '../../../apis/Project/useProjects'
 import { message } from 'antd'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useUpdateUser } from '../../../apis/Users/useUsers'
-// import { useDeleteByProjectAndUserId } from '../../../apis/ProjectUser/useProjectUsers'
+import { useDeleteByProjectAndUserId } from '../../../apis/ProjectUser/useProjectUsers'
 
 export default function ProjectsList({ role }: { role: string }) {
   const {
@@ -31,60 +31,61 @@ export default function ProjectsList({ role }: { role: string }) {
   } = useProjectByUserRole(userId, role)
   const { mutate: deleteProject } = useDeleteProject()
   const { mutate: updateUser } = useUpdateUser()
-  // const { mutate: deleteUserProject } = useDeleteByProjectAndUserId()
+  const { mutate: deleteUserProject } = useDeleteByProjectAndUserId()
+  if (role === 'Admin') console.log(projects)
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   function handleDeleteProject(id: number) {
-    // if (role === 'User') {
-    //   deleteUserProject({
-    //     userId: userId,
-    //     projectId: id,
-    //   })
-    //   message.success('Project Deleted Successfully')
-    //   navigate(0)
-    // }
+    if (role === 'User') {
+      deleteUserProject({
+        userId: userId,
+        projectId: id,
+      })
+      message.success('Project Deleted Successfully')
+      navigate(0)
+    }
 
-    // if (role === 'Admin') {
-    console.log('Deleting project with id:', id)
-    deleteProject(id, {
-      onSuccess: () => {
-        message.success('Project Deleted Successfully')
+    if (role === 'Admin') {
+      console.log('Deleting project with id:', id)
+      deleteProject(id, {
+        onSuccess: () => {
+          message.success('Project Deleted Successfully')
 
-        let newdefaultId
-        if (projects.length > 1) {
-          if (id === defaultProjectId) {
-            newdefaultId =
-              projects[0].id === defaultProjectId
-                ? projects[1].id
-                : projects[0].id
+          let newdefaultId
+          if (projects.length > 1) {
+            if (id === defaultProjectId) {
+              newdefaultId =
+                projects[0].id === defaultProjectId
+                  ? projects[1].id
+                  : projects[0].id
+            }
+          } else {
+            newdefaultId = null
           }
-        } else {
-          newdefaultId = null
-        }
-        console.log('New default project id:', newdefaultId)
-        console.log('project length:', projects.length)
-        if (
-          (projects.length > 1 && id === defaultProjectId) ||
-          projects.length === 1
-        )
-          if (userId) {
-            updateUser({
-              id: userId,
-              user: {
+          console.log('project length:', projects.length)
+          if (
+            (projects.length > 1 && id === defaultProjectId) ||
+            projects.length === 1
+          )
+            if (userId) {
+              console.log('New default project id:', newdefaultId)
+              updateUser({
                 id: userId,
-                firstName: firstName,
-                lastName: lastName,
-                email: '',
-                phoneNumber: '',
-                defaultProjectId: newdefaultId,
-              },
-            })
-          }
-        // navigate(0)
-      },
-    })
-    // }
+                user: {
+                  id: userId,
+                  firstName: firstName,
+                  lastName: lastName,
+                  email: '',
+                  phoneNumber: '',
+                  defaultProjectId: newdefaultId,
+                },
+              })
+            }
+          // navigate(0)
+        },
+      })
+    }
   }
 
   if (isLoading) return <div>Loading...</div>
