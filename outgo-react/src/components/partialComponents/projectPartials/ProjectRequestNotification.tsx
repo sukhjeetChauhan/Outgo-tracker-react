@@ -1,10 +1,10 @@
-import { message } from 'antd'
+// import { message } from 'antd'
 import { useDeleteProjectJoinRequest } from '../../../apis/ProjectJoinRequest/useProjectJoinRequest'
 import {
-  useCreateProjectUser,
+  // useCreateProjectUser,
   useGetProjectUserByUserId,
 } from '../../../apis/ProjectUser/useProjectUsers'
-import { Role } from '../../../Types/enums'
+// import { Role } from '../../../Types/enums'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
@@ -27,7 +27,7 @@ interface ProjectRequestNotificationProps {
 export default function ProjectRequestNotification({
   projectRequest,
 }: ProjectRequestNotificationProps) {
-  const { mutate: addProjectUser } = useCreateProjectUser()
+  // const { mutate: addProjectUser } = useCreateProjectUser()
   const { mutate: deleteProjectRequest } = useDeleteProjectJoinRequest()
   const { id } = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
@@ -46,20 +46,20 @@ export default function ProjectRequestNotification({
   const isAdmin = checkRole()
 
   function handleRequestAccept() {
-    addProjectUser(
-      {
-        userId: projectRequest.userId,
-        projectId: projectRequest.projectId,
-        role: 'User' as Role,
-      },
-      {
-        onSuccess: () => {
-          message.success('User added to project successfully')
-          deleteProjectRequest(projectRequest.id)
-          navigate(0)
-        },
-      }
-    )
+    // addProjectUser(
+    //   {
+    //     userId: projectRequest.userId,
+    //     projectId: projectRequest.projectId,
+    //     role: 'User' as Role,
+    //   },
+    //   {
+    //     onSuccess: () => {
+    //       message.success('User added to project successfully')
+    deleteProjectRequest(projectRequest.id)
+    navigate(0)
+    //   },
+    // }
+    // )
   }
   return (
     <>
