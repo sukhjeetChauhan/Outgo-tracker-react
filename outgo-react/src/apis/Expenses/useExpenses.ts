@@ -35,6 +35,7 @@ export const useCreateExpense = () => {
     mutationFn: ExpensesRepository.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
+      
     },
   })
 }

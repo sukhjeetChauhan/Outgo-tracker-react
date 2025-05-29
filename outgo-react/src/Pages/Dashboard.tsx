@@ -6,16 +6,14 @@ import CompareMonthlyExpenses from '../components/partialComponents/Charts/Compa
 import OverallDetails from '../components/partialComponents/Charts/OverallDetails'
 
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
-// import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
-// import ProjectDashboardName from '../components/partialComponents/projectPartials/ProjectDashboardName'
+
 
 interface DashboardProps {
   showAddProjectModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
   setIncomeForm: React.Dispatch<React.SetStateAction<boolean>>
-  // firstName: string
-  // lastName: string
+ 
 }
 
 export default function Dashboard({

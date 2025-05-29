@@ -112,10 +112,11 @@ const AddExpenseForm = ({
       }
 
       try {
-        await createExpense(postData)
-        await updateProject({ id: defaultProjectId, project: updatedProject })
+        createExpense(postData)
+        updateProject({ id: defaultProjectId, project: updatedProject })
         message.success('Expense added successfully')
         reset()
+
         setShowModal(false)
         setExpenseForm(false)
       } catch (error) {

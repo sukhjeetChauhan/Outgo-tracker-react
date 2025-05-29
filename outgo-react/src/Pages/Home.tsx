@@ -20,24 +20,25 @@ import ProjectDashboardName from '../components/partialComponents/projectPartial
 import UserLabelDashboard from '../components/partialComponents/userComponents/UserLabelDashboard'
 
 export default function Home() {
-  const { instance, accounts } = useMsal()
+  const { instance, accounts } = useMsal() // Get the MSAL instance and accounts
+
   const dispatch = useDispatch<AppDispatch>()
   const { id, firstName, lastName } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user // Get user details from Redux store
   )
-  const [retractMenu, setRetractMenu] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [IncomeForm, setIncomeForm] = useState(false)
-  const [ExpenseForm, setExpenseForm] = useState(false)
-  const [showAddProjectModal, SetShowAddProjectModal] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
+  const [retractMenu, setRetractMenu] = useState(false) // State to control the retractable menu
+  const [showModal, setShowModal] = useState(false) // State to control the modal visibility
+  const [IncomeForm, setIncomeForm] = useState(false) // State to control the income form visibility
+  const [ExpenseForm, setExpenseForm] = useState(false) // State to control the expense form visibility
+  const [showAddProjectModal, SetShowAddProjectModal] = useState(false) // State to control the add project modal visibility
+  const [showMenu, setShowMenu] = useState(false) // State to show/hide menu for smaller screens.
 
   const location = useLocation()
   // const { mutate: updateUser } = useUpdateUser()
 
   useEffect(() => {
     dispatch(fetchUser({ accounts, instance }))
-  }, [dispatch, accounts, instance])
+  }, [dispatch, accounts, instance]) // Fetch user details when component mounts or accounts/instance change
 
   const { data: user, isLoading: userLoading } = useUsersById(
     id as unknown as string
@@ -59,12 +60,13 @@ export default function Home() {
   // }
 
   useEffect(() => {
+    // Check if user exists and has a default project Id, if not prompt to add a project
     if (id) {
       if (user) {
         if (user.defaultProjectId === null) {
           console.log('User has no default project')
-          dispatch(setDefaultProjectId(null))
-          SetShowAddProjectModal(true)
+          dispatch(setDefaultProjectId(null)) // Reset default project ID in Redux store
+          SetShowAddProjectModal(true) // prompt to add a project
         } else {
           dispatch(setDefaultProjectId(user.defaultProjectId))
         }
@@ -72,7 +74,7 @@ export default function Home() {
         if (!userLoading) {
           console.log('User not found')
 
-          // Ensure id is not null
+          // This block runs if the user is not found in the database
           const newUser = {
             id: id,
             firstName: firstName,
@@ -140,7 +142,7 @@ export default function Home() {
           </div>
         </div>
         <div className="min-h-screen flex-1 flex flex-col items-center relative">
-          <div className="border-b-2 border-gray-200 w-full h-20 flex items-center justify-between px-4 bg-teal-500 absolute top-0 left-0 right-0">
+          <div className="border-b-2 border-gray-200 w-full h-20 flex items-center justify-between px-4 bg-teal-500 absolute top-0 left-0 right-0 z-99">
             <ProjectDashboardName />
             <img
               src="/menu.png"
