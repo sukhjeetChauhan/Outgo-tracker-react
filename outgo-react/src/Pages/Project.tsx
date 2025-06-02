@@ -30,7 +30,7 @@ export default function Project() {
   }
 
   return (
-    <div className="p-4 w-full max-h-full overflow-auto">
+    <div className="p-4 w-full h-full overflow-auto">
       <div className="flex flex-col items-center justify-center gap-4 w-full h-full">
         {showModal && (
           <FormModal>
@@ -51,7 +51,7 @@ export default function Project() {
         {projectRequest && (
           <ProjectRequestNotification projectRequest={projectRequest} />
         )}
-        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 relative">
+        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 relative mt-72 sm:mt-0">
           <h2 className="text-teal-800 font-semibold text-2xl">
             Current Project Details
           </h2>

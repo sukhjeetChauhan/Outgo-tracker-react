@@ -119,7 +119,7 @@ export default function Home() {
         <div
           className={`border-r-2 border-gray-200 shadow-inner absolute sm:static ${
             showMenu ? 'left-0' : '-left-100'
-          } z-900 transition-all duration-300 ease-in-out`}
+          } z-100 transition-all duration-300 ease-in-out`}
         >
           <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
@@ -145,13 +145,13 @@ export default function Home() {
           <div
             className="border-b-2 border-gray-200 w-full min-h-20 flex items-center justify-between px-4 bg-teal-500
           
-           z-99"
+           sm:z-10"
           >
             <ProjectDashboardName />
             <img
               src="/menu.png"
               alt="Hamburger menu"
-              className="w-16 h-16 sm:hidden z-900"
+              className="w-16 h-16 sm:hidden z-999"
               onClick={() => setShowMenu(!showMenu)}
             />
             <UserLabelDashboard firstName={firstName} lastName={lastName} />
