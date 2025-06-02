@@ -48,10 +48,9 @@ export default function Expense() {
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error fetching expenses</div>
-  
 
   return (
-    <div className="mt-20 p-4 w-full h-full">
+    <div className="p-4 w-full h-full">
       <div className="flex flex-col items-start justify-center rounded w-full h-full">
         <div className="flex sm:gap-4">
           <GetWeeklyExpenses

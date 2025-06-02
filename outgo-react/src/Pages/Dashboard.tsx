@@ -7,13 +7,11 @@ import OverallDetails from '../components/partialComponents/Charts/OverallDetail
 
 import AddNewProjectModal from '../components/partialComponents/Modals/AddNewProjectModal'
 
-
 interface DashboardProps {
   showAddProjectModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
   setIncomeForm: React.Dispatch<React.SetStateAction<boolean>>
- 
 }
 
 export default function Dashboard({
@@ -28,7 +26,7 @@ DashboardProps) {
     <div className="flex flex-col items-center justify-center h-[calc(100vh-5px)] gap-4 w-full p-4 relative overflow-y-auto">
       {showAddProjectModal && <AddNewProjectModal />}
 
-      <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 mt-20 flex items-center justify-center">
+      <div className="border-b-2 border-gray-200 w-full h-24 rounded bg-teal-100 flex items-center justify-center">
         <div className="flex justify-around w-full items-center px-4">
           <ExpenseDashboardButton
             showForm={setExpenseForm}

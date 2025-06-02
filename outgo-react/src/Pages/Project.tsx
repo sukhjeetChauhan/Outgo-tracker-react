@@ -30,63 +30,65 @@ export default function Project() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4 w-full p-4 overflow-y-auto pt-48 sm:pt-24">
-      {showModal && (
-        <FormModal>
-          {ProjectForm && (
-            <AddProjectForm
-              setShowModal={setShowModal}
-              setProjectForm={setProjectForm}
-            />
-          )}
-          {updateForm && (
-            <UpdateProjectForm
-              setShowModal={setShowModal}
-              setUpdateForm={setUpdateForm}
-            />
-          )}
-        </FormModal>
-      )}
-      {projectRequest && (
-        <ProjectRequestNotification projectRequest={projectRequest} />
-      )}
-      <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 relative">
-        <h2 className="text-teal-800 font-semibold text-2xl">
-          Current Project Details
-        </h2>
-        <div className="flex-1 flex flex-col justify-around items-start">
-          <p className="text-lg text-teal-900">{`Name: ${
-            project ? project.name : ''
-          }`}</p>
-          <p className="text-lg text-teal-900">{`Description: ${
-            project ? project.description : ''
-          }`}</p>
-          <p className="text-lg text-teal-900">{`Budget: Rs ${
-            project ? project.budget : ''
-          }`}</p>
-          <p className="text-lg text-teal-900">{`Current Savings: Rs ${
-            project ? project.savings : ''
-          }`}</p>
-        </div>
-        <img
-          src="/edit.png"
-          className="w-8 h-8 absolute right-6 top-6 sm:right-12 sm:top-12 cursor-pointer"
-          onClick={() => editProject()}
-        />
-      </div>
-      <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">
-        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4">
+    <div className="p-4 w-full max-h-full overflow-auto">
+      <div className="flex flex-col items-center justify-center gap-4 w-full h-full">
+        {showModal && (
+          <FormModal>
+            {ProjectForm && (
+              <AddProjectForm
+                setShowModal={setShowModal}
+                setProjectForm={setProjectForm}
+              />
+            )}
+            {updateForm && (
+              <UpdateProjectForm
+                setShowModal={setShowModal}
+                setUpdateForm={setUpdateForm}
+              />
+            )}
+          </FormModal>
+        )}
+        {projectRequest && (
+          <ProjectRequestNotification projectRequest={projectRequest} />
+        )}
+        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 relative">
           <h2 className="text-teal-800 font-semibold text-2xl">
-            Created Projects
+            Current Project Details
           </h2>
-          <ProjectsList role="Admin" />
-          <ProjectCreateButton
-            showForm={setProjectForm}
-            setShowModal={setShowModal}
+          <div className="flex-1 flex flex-col justify-around items-start">
+            <p className="text-lg text-teal-900">{`Name: ${
+              project ? project.name : ''
+            }`}</p>
+            <p className="text-lg text-teal-900">{`Description: ${
+              project ? project.description : ''
+            }`}</p>
+            <p className="text-lg text-teal-900">{`Budget: ${
+              project ? project.budget : ''
+            }`}</p>
+            <p className="text-lg text-teal-900">{`Current Savings: ${
+              project ? project.savings : ''
+            }`}</p>
+          </div>
+          <img
+            src="/edit.png"
+            className="w-8 h-8 absolute right-6 top-6 sm:right-12 sm:top-12 cursor-pointer"
+            onClick={() => editProject()}
           />
         </div>
-        <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 min-h-36 relative">
-          <JoinOtherProjects />
+        <div className="flex flex-col sm:flex-row w-full flex-1 gap-4">
+          <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4">
+            <h2 className="text-teal-800 font-semibold text-2xl">
+              Created Projects
+            </h2>
+            <ProjectsList role="Admin" />
+            <ProjectCreateButton
+              showForm={setProjectForm}
+              setShowModal={setShowModal}
+            />
+          </div>
+          <div className="w-full flex-1 flex flex-col justify-between items-start bg-teal-50 shadow-md rounded p-4 gap-4 min-h-36 relative">
+            <JoinOtherProjects />
+          </div>
         </div>
       </div>
     </div>

@@ -121,7 +121,7 @@ export default function Home() {
             showMenu ? 'left-0' : '-left-100'
           } z-900 transition-all duration-300 ease-in-out`}
         >
-          <div className="bg-teal-400 h-screen flex flex-col items-center ">
+          <div className="bg-teal-400 h-full flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
               <h2 className="text-white font-semibold text-2xl flex items-center justify-center h-full">
                 Outgo
@@ -141,8 +141,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="min-h-screen flex-1 flex flex-col items-center relative">
-          <div className="border-b-2 border-gray-200 w-full h-20 flex items-center justify-between px-4 bg-teal-500 absolute top-0 left-0 right-0 z-99">
+        <div className="h-screen flex-1 flex flex-col items-center relative">
+          <div
+            className="border-b-2 border-gray-200 w-full min-h-20 flex items-center justify-between px-4 bg-teal-500
+          
+           z-99"
+          >
             <ProjectDashboardName />
             <img
               src="/menu.png"
