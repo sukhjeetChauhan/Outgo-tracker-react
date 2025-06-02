@@ -121,7 +121,7 @@ export default function Home() {
             showMenu ? 'left-0' : '-left-100'
           } z-900 transition-all duration-300 ease-in-out`}
         >
-          <div className="bg-teal-400 h-full flex flex-col items-center ">
+          <div className="bg-teal-400 h-screen flex flex-col items-center ">
             <div className="h-20 bg-teal-500 w-full">
               <h2 className="text-white font-semibold text-2xl flex items-center justify-center h-full">
                 Outgo
