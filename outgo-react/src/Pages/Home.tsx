@@ -68,10 +68,12 @@ export default function Home() {
           dispatch(setDefaultProjectId(null)) // Reset default project ID in Redux store
           SetShowAddProjectModal(true) // prompt to add a project
         } else {
+          // If user exists and has a default project ID
           dispatch(setDefaultProjectId(user.defaultProjectId))
         }
       } else {
         if (!userLoading) {
+          // Check if user is still loading
           console.log('User not found')
 
           // This block runs if the user is not found in the database

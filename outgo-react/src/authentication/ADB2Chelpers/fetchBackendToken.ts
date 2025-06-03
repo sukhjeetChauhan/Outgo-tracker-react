@@ -32,7 +32,7 @@ const fetchBackendToken = async (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      withCredentials: true, // 🔹 Important for CORS
+      withCredentials: true, // Important for CORS
     }
 
     return { token, tokenOptions }

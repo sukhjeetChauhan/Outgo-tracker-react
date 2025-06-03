@@ -107,7 +107,7 @@ export default function ProjectsList({ role }: { role: string }) {
     if (projects.length > 0) {
       const reversedProjects = [...projects].reverse()
       return (
-        <div className="flex flex-col p-2 w-full h-48 overflow-y-auto">
+        <div className="flex flex-col p-2 w-full h-full overflow-y-auto">
           {reversedProjects.map((project: { id: number; name: string }) => (
             <div
               key={project.id}
