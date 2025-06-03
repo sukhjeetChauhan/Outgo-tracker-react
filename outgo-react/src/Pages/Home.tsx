@@ -62,7 +62,9 @@ export default function Home() {
   useEffect(() => {
     // Check if user exists and has a default project Id, if not prompt to add a project
     if (id) {
+      // user Id from Redux store
       if (user) {
+        // If user exists in the database
         if (user.defaultProjectId === null) {
           console.log('User has no default project')
           dispatch(setDefaultProjectId(null)) // Reset default project ID in Redux store

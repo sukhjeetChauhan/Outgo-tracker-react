@@ -24,7 +24,6 @@ const DataTable = ({ data, itemsPerPage = 8 }: DataTableProps) => {
 
   return (
     <div className="w-full">
-      {/* Render Items */}
       <ul className="">
         {currentItems.map((data, index) => (
           <li key={index} className="py-[5px] border-b-2 border-gray-300">

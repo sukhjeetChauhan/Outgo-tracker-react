@@ -28,16 +28,16 @@ export default function CategoryPieChart() {
 
       const categoryExpenses = Object.keys(categories).reduce(
         (acc: { [key: string]: number }, category) => {
-          acc[category] = 0
+          acc[category] = 0 // Initialize each category with 0
           return acc
         },
         {}
       )
       for (let i = 0; i < expenses?.length; i++) {
-        const category = expenses[i].category
+        const category = expenses[i].category // assigning the category value from individual expense
         for (const key in categories as { [key: string]: string[] }) {
-          if (categories[key].includes(category)) {
-            categoryExpenses[key] += expenses[i].amount
+          if (categories[key].includes(category)) { // checking if the category of the expense is in the categories object
+            categoryExpenses[key] += expenses[i].amount // adding the amount of the expense to the corresponding category
           }
         }
       }

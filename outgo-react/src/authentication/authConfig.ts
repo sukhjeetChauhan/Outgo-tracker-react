@@ -28,7 +28,7 @@ const msalConfig = {
   },
 }
 
-// 🔹 Define a separate authority for password reset
+// Define a separate authority for password reset
 export const passwordResetAuthority = `${passwordResetAuth}`
 
 // Create MSAL instance

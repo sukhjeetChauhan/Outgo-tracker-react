@@ -45,9 +45,9 @@ export default function CompareMonthlyExpenses() {
         {}
       )
       for (let i = 0; i < expenses?.length; i++) {
-        const monthIndex = new Date(expenses[i].date).getMonth()
+        const monthIndex = new Date(expenses[i].date).getMonth() // Get the month index from the date
 
-        monthlyExpenses[months[monthIndex]] += expenses[i].amount
+        monthlyExpenses[months[monthIndex]] += expenses[i].amount // Add the amount to the corresponding month
       }
 
       const data: ChartData = {

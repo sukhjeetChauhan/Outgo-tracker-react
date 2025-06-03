@@ -64,7 +64,7 @@ export default function ProjectRequestNotification({
   return (
     <>
       {isAdmin && (
-        <div className="w-full h-16 bg-teal-100 rounded mt-20">
+        <div className="w-full h-16 bg-teal-100 rounded mt-4">
           <div className="flex justify-between items-center p-2">
             <p className="text-lg text-teal-900">{`You have a Project Join Request from ${projectRequest?.userName}`}</p>
             <button
