@@ -108,8 +108,13 @@ const AddProjectForm = ({
         setShowModal(false)
         setProjectForm(false)
       },
-      onError: () => {
-        message.error('Failed to add expense')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (error: any) => {
+        if (error?.response?.data?.message) {
+          message.error(error.response.data.message)
+        } else {
+          message.error('Failed to add project')
+        }
       },
     })
   }
